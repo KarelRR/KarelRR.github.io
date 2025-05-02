@@ -1,399 +1,518 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PayKard Service</title>
+    <title>PayKard - Tu Visa Virtual Recargable</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
-
+        :root {
+            --primary: #4a6bff;
+            --secondary: #2d3748;
+            --accent: #00c853;
+            --light: #f7fafc;
+            --dark: #1a202c;
+        }
+        
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
             margin: 0;
             padding: 0;
-            background: #0f2027; /* fallback for old browsers */
-            background: linear-gradient(to right, #2c5364, #203a43, #0f2027);
-            color: #fff;
-            overflow-x: hidden;
-            position: relative;
+            background-color: #f5f7fa;
         }
-
+        
         header {
-            background: linear-gradient(135deg, #007bff, #00c6ff);
-            padding: 0px 20px;
-            text-align: center;
+            background: linear-gradient(135deg, var(--primary), #3a56e6);
             color: white;
-            position: relative;
-            overflow: hidden;
+            padding: 0rem 0;
+            text-align: center;
         }
-
-        header::after {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: -50%;
-            width: 200%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            transform: rotate(-25deg);
-            animation: slide 5s linear infinite;
-        }
-
-        @keyframes slide {
-            0% { transform: rotate(-25deg) translateX(0); }
-            100% { transform: rotate(-25deg) translateX(50%); }
-        }
-
-        section {
-            padding: 40px 20px;
+        
+        .container {
             max-width: 1200px;
-            margin: auto;
-            animation: fadeIn 1s ease;
+            margin: 0 auto;
+            padding: 0 20px;
         }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        h1, h2 {
+        
+        .logo {
+            font-size: 2.5rem;
             font-weight: 700;
+            margin-bottom: 1rem;
         }
-
-        ul {
-            list-style: none;
+        
+        .tagline {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-image {
+            max-width: 300px;
+            margin: 0 auto;
+            display: block;
+        }
+        
+        section {
+            padding: 3rem 0;
+        }
+        
+        h2 {
+            color: var(--secondary);
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-title {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .pricing {
+            background-color: var(--light);
+            text-align: center;
+        }
+        
+        .price {
+            font-size: 3rem;
+            color: var(--primary);
+            font-weight: 700;
+            margin: 1rem 0;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .cta-button:hover {
+            background-color: #00b247;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 200, 83, 0.3);
+        }
+        
+        .wallets {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .wallet-img {
+            height: 50px;
+        }
+        
+        footer {
+            background-color: var(--secondary);
+            color: white;
+            text-align: center;
+            padding: 1rem 0;
+            margin-top: 2rem;
+        }
+        
+        .telegram-button {
+            background-color: #0088cc;
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 24px;
+            border-radius: 30px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 1rem;
+        }
+        
+        .telegram-button:hover {
+            background-color: #0077b3;
+        }
+        
+        .telegram-icon {
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+        
+        .what-is {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .benefits-list {
+            list-style-type: none;
             padding: 0;
         }
-
-        ul li::before {
-            content: '\2713';
-            color: #00c6ff;
-            font-weight: bold;
-            margin-right: 10px;
+        
+        .benefits-list li {
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%234a6bff" width="24px" height="24px"><path d="M0 0h24v24H0z" fill="none"/><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>') no-repeat left center;
+            padding-left: 30px;
+            margin-bottom: 1rem;
+            line-height: 1.6;
         }
-
-        .images {
+        
+        .payment-methods {
             display: flex;
-            flex-wrap: wrap;
             justify-content: center;
-            gap: 20px;
-            margin-top: 30px;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
         }
-
-        .images img {
-            width: 200px;
-            height: auto;
+        
+        .payment-method {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #f0f4f8;
+            padding: 0.5rem 1rem;
             border-radius: 20px;
-            box-shadow: 0 px px rgba(0,0,0,0.4);
-            transition: transform 0.5s, box-shadow 0.5s;
         }
-
-        .images img:hover {
-            transform: scale(1.1);
-            box-shadow: 0 px 24px rgba(0,0,0,0.6);
+        
+        .support-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: #e3f2fd;
+            color: #1976d2;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            margin-top: 1rem;
         }
-
-        footer {
+      
+      
+       /* Nuevos estilos para pasos */
+        .steps {
+            background-color: var(--light);
+            padding: 3rem 0;
+        }
+        
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .step {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
             text-align: center;
-            padding: 0px;
-            background: linear-gradient(135deg, #00c6ff, #007bff);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .step-number {
+            background-color: var(--primary);
             color: white;
-            margin-top: 50px;
-            font-size: 14px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1rem;
+            font-weight: bold;
         }
-
-        button {
-            background-color: #00c6ff;
-            border: none;
-            padding: 15px 30px;
-            color: white;
-            font-size: 18px;
-            border-radius: 30px;
-            cursor: pointer;
-            margin-top: 30px;
-            transition: background 0.3s, transform 0.3s;
+        
+        .card-image-container {
+            text-align: center;
+            margin: 2rem 0;
         }
-
-        button:hover {
-            background-color: #007bff;
-            transform: scale(1.05);
+        
+        .card-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
-
-        /* Particulas */
-        #particles-js {
+      
+      
+      
+      /* Botón flotante de soporte */
+        .floating-support {
             position: fixed;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            z-index: -1;
+            bottom: 30px;
+            right: 30px;
+            z-index: 100;
         }
+        
+        .support-btn {
+            background-color: #0088cc;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        
+        .support-btn:hover {
+            background-color: #0077b3;
+            transform: scale(1.1);
+        }
+        
+        .support-message {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            width: 250px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        
+        .support-message.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .support-message p {
+            margin: 0 0 10px 0;
+            color: var(--dark);
+        }
+        
+        .support-message a {
+            color: #0088cc;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .support-message a:hover {
+            text-decoration: underline;
+        }
+        
+        .close-message {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            color: #718096;
+        }
+      
     </style>
-<style type="text/css">
-.grande { font-size: 60px; }
-</style>
-<script>
-// Escribir aqui el código Javascript
-</script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
-    <div id="particles-js"><canvas class="particles-js-canvas-el" width="661" height="545" style="width: 100%; height: 100%;"></canvas></div>
-
     <header>
-        <h1>PayKard Service💳</h1>
-        <p>Nuestra tarjeta visa virtual espera por ti 🛒</p>
-    </header>
-
-    <section>
-      
-
-        <h3>¿Qué es una Tarjeta Visa Virtual Recargable?</h3>
-        <p>
-            Una tarjeta digital perfecta para realizar compras en línea, recargable y sin necesidad de físico. Usa nuestra Visa Virtual donde quieras, cuando quieras. Además, puedes vincular tu tarjeta a <strong>Google Wallet</strong>, <strong>Apple Wallet</strong> y <strong>PayPal</strong> para pagar de forma aún más rápida y segura.
-        </p>
-
-        <h3>¿Por qué elegir nuestra Visa Virtual?</h3>
-        <ul>
-            <li>Activación instantánea</li>
-          <li>Bajo precio de activacion y comisiones por recarga</li>
-            <li>Recargas seguras y confiables a travez Paypal, crypto y más</li>
-            <li>Compras en linea internacionales</li>
-            <li>Compatible con Google, Apple Wallet y PayPal</li>
-            <li>Soporte dedicado 24/7</li>
-        </ul>
-
-      
-      <div class="images">
+        <div class="container">
+            <div class="logo">PayKard</div>
+            <div class="tagline">Tu Visa Virtual Recargable</div>
            
-            <img src="https://i.postimg.cc/HW9mvK3N/6463554-1.png" alt="Dinero Digital">
         </div>
-        <div style="text-align:center;">
-            <button onclick="contactar()">Solicitar ahora por 5$</button>
+    </header>
+    
+    <section class="benefits">
+        <div class="container">
+            <div class="what-is">
+                <h3>¿Qué es una Tarjeta Visa Virtual Recargable?</h3>
+                <p>Una tarjeta digital perfecta para realizar compras en línea, recargable y sin necesidad de físico. Usa nuestra Visa Virtual donde quieras, cuando quieras. Además, puedes vincular tu tarjeta a Google Wallet, Apple Wallet y PayPal para pagar de forma aún más rápida y segura.</p>
+            </div>
+            
+            <h3>¿Por qué elegir nuestra Visa Virtual?</h3>
+            <ul class="benefits-list">
+                <li><strong>Activación instantánea:</strong> Obtén tu tarjeta inmediatamente después del pago</li>
+                <li><strong>Bajo precio de activación:</strong> Solo $4.99 por la emisión de tu tarjeta virtual</li>
+               <li><strong>Administrable desde telegram:</strong> Administra tu tarjeta desde nuestro bot</li>
+                <li><strong>Comisiones bajas por recarga:</strong> Recarga tu saldo con tarifas competitivas</li>
+                <li><strong>Recargas seguras y confiables:</strong> A través de múltiples métodos de pago</li>
+                <li><strong>Compras en línea internacionales:</strong> Aceptada en millones de comercios worldwide</li>
+                <li><strong>Compatible con las principales billeteras digitales</strong></li>
+                <li><strong>Soporte dedicado 24/7:</strong> Asistencia cuando la necesites</li>
+            </ul>
+            
+            <div class="payment-methods">
+                <div class="payment-method">
+                    <i class="fab fa-paypal" style="color: #003087;"></i>
+                    <span>PayPal</span>
+                </div>
+                <div class="payment-method">
+                    <i class="fas fa-coins" style="color: #f7931a;"></i>
+                    <span>Criptomonedas</span>
+                </div>
+                <div class="payment-method">
+                    <i class="fas fa-credit-card" style="color: #4a6bff;"></i>
+                    <span>Tarjetas</span>
+                </div>
+                <div class="payment-method">
+                    <i class="fas fa-university" style="color: #28a745;"></i>
+                    <span>Transferencias</span>
+                </div>
+            </div>
+            
+            <div class="support-badge">
+                <i class="fas fa-headset"></i>
+                <span>Soporte 24/7 disponible</span>
+            </div>
         </div>
-        
+    </section>
+    
+    <section class="pricing">
+        <div class="container">
+            <h3>Precio único</h3>
+            <div class="price">$4.99</div>
+            <p>Un único pago por la emisión de tu tarjeta virtual Visa. Sin costes ocultos.</p>
+        </div>
+    </section>
+    
+    <section class="wallets-section">
+        <div class="container">
+            <h3>Compatibilidad con billeteras digitales</h3>
+            <div class="wallets">
+                <img src="https://i.postimg.cc/Z5Jcm1Hy/Google-Wallet-Logo-500x281.png" alt="Google Wallet" class="wallet-img">
+                <img src="https://i.postimg.cc/zX8WHTgs/Apple-Pay-logo-500x281.png" alt="Apple Wallet" class="wallet-img">
+                <img src="https://i.postimg.cc/PqtF6C99/Paypal-Logo-500x281.png" alt="PayPal" class="wallet-img">
+            </div>
+            <p>Añade tu PayKard a tu billetera digital favorita y paga con tu móvil de forma rápida y segura.</p>
+        </div>
     </section>
   
   
   
-  <!-- Carrusel de Comentarios de Clientes -->
-<section id="testimonios">
-  <h3>Lo que dicen nuestros clientes</h3>
-  <div class="carrusel">
-    <div class="carrusel-item activo">
-      <p>"¡Excelente servicio! La tarjeta me funcionó perfecto para mis compras en Amazon."</p>
-      <h4>- María G.</h4>
-    </div>
-    <div class="carrusel-item">
-      <p>"Muy rápido el soporte por Telegram, recargué mi tarjeta en minutos."</p>
-      <h4>- Juan P.</h4>
-    </div>
-    <div class="carrusel-item">
-      <p>"La posibilidad de recargarla con crypto es lo mejor ¡Recomendados!"</p>
-      <h4>- Laura M.</h4>
-    </div>
-    <div class="carrusel-item">
-      <p>"¡Todo seguro y confiable! Ya he hecho varias compras en línea sin problemas."</p>
-      <h4>- Carlos S.</h4>
-    </div>
-    <div class="carrusel-item">
-      <p>"Me encanta lo fácil que es usar esta tarjeta virtual, ¡gracias por todo!"</p>
-      <h4>- Daniela V.</h4>
-    </div>
-  </div>
-
-  <!-- Puntitos indicadores -->
-  <div class="indicadores">
-    <span class="punto activo"></span>
-    <span class="punto"></span>
-    <span class="punto"></span>
-    <span class="punto"></span>
-    <span class="punto"></span>
-  </div>
-</section>
-
-<style>
-  #testimonios {
-    text-align: center;
-    padding: 60px 20px;
-    background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
-    color: white;
-  }
-
-  .carrusel {
-    position: relative;
-    overflow: hidden;
-    max-width: 600px;
-    margin: 30px auto 0;
-  }
-
-  .carrusel-item {
-    display: none;
-    padding: 20px;
-    animation: aparecerTestimonio 1s ease;
-  }
-
-  .carrusel-item.activo {
-    display: block;
-  }
-
-  @keyframes aparecerTestimonio {
-    from { opacity: 0; transform: translateX(20px); }
-    to { opacity: 1; transform: translateX(0); }
-  }
-
-  .carrusel-item p {
-    font-size: 18px;
-    font-style: italic;
-    margin-bottom: 10px;
-  }
-
-  .carrusel-item h4 {
-    font-size: 16px;
-    color: #00c6ff;
-    margin-top: 5px;
-  }
-
-  /* Estilos de los puntitos indicadores */
-  .indicadores {
-    margin-top: 20px;
-  }
-
-  .punto {
-    display: inline-block;
-    width: 12px;
-    height: 12px;
-    margin: 0 5px;
-    background: #bbb;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background 0.3s;
-  }
-
-  .punto.activo {
-    background: #00c6ff;
-  }
-</style>
-
-<script>
-  let indice = 0;
-  const items = document.querySelectorAll('.carrusel-item');
-  const puntos = document.querySelectorAll('.punto');
-
-  function mostrarSiguienteComentario() {
-    items[indice].classList.remove('activo');
-    puntos[indice].classList.remove('activo');
-    indice = (indice + 1) % items.length;
-    items[indice].classList.add('activo');
-    puntos[indice].classList.add('activo');
-  }
-
-  // Cambio automático cada 4 segundos
-  setInterval(mostrarSiguienteComentario, 4000);
-
-  // También puedes permitir hacer clic en los puntitos
-  puntos.forEach((punto, i) => {
-    punto.addEventListener('click', () => {
-      items[indice].classList.remove('activo');
-      puntos[indice].classList.remove('activo');
-      indice = i;
-      items[indice].classList.add('activo');
-      puntos[indice].classList.add('activo');
-    });
-  });
-</script>
-
-  
-  
- <!-- Botón flotante de Telegram -->
-<a href="https://t.me/Mr_DevelopersWeb" target="_blank" id="telegram-button">
-  <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg" alt="Soporte Telegram" id="telegram-icon">
-</a>
-
-<!-- Mensaje flotante -->
-<div id="telegram-message">¿Necesitas ayuda?</div>
-
-<style>
-  /* Icono Telegram flotante */
-  #telegram-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 999;
-  }
-
-  #telegram-icon {
-    width: 60px;
-    height: 60px;
-    animation: vibrar 1.5s infinite;
-    transition: transform 0.3s;
-  }
-
-  #telegram-icon:hover {
-    transform: scale(1.1);
-  }
-
-  /* Animación de vibración */
-  @keyframes vibrar {
-    0% { transform: translate(0); }
-    20% { transform: translate(-2px, 2px); }
-    40% { transform: translate(2px, -2px); }
-    60% { transform: translate(-2px, 2px); }
-    80% { transform: translate(2px, -2px); }
-    100% { transform: translate(0); }
-  }
-
-  /* Mensaje flotante */
-  #telegram-message {
-    position: fixed;
-    bottom: 90px;
-    right: 20px;
-    background: #0088cc;
-    color: white;
-    padding: 10px 20px;
-    border-radius: 20px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
-    font-size: 16px;
-    opacity: 0;
-    animation: aparecer 3s forwards;
-    z-index: 998;
-  }
-
-  @keyframes aparecer {
-    0% { opacity: 0; transform: translateY(20px); }
-    10% { opacity: 1; transform: translateY(0); }
-    80% { opacity: 1; transform: translateY(0); }
-    100% { opacity: 0; transform: translateY(20px); }
-  }
-</style>
-
-
-
-    <footer>
-        <p>2025 PayKard. Todos los derechos reservados</p>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script>
-        particlesJS('particles-js', {
-            particles: {
-                number: { value: 80 },
-                size: { value: 3 },
-                move: { speed: 2 },
-                line_linked: { enable: true },
-                color: { value: "#00c6ff" },
-            },
-            interactivity: {
-                events: {
-                    onhover: { enable: true, mode: 'repulse' }
-                }
-            }
-        });
-
-        function contactar() {
-            window.location.href = 'https://t.me/Mr_DevelopersWeb';
+  <section class="steps">
+        <div class="container">
+            <h3>¿Cómo obtener tu PayKard?</h3>
+            <div class="steps-grid">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Solicítala por Telegram</h3>
+                    <p>Haz clic en el botón y comienza el proceso</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Realiza el pago</h3>
+                    <p>Abona los $5 de activación</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Recibe tus datos</h3>
+                    <p>Obtén instantáneamente los datos de tu tarjeta</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>¡Comienza a usar!</h3>
+                    <p>Añádela a tu wallet favorita y disfruta</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="cta">
+        <div class="container" style="text-align: center;">
+            <h3>Obtén tu PayKard hoy mismo</h3>
+            <p>Solicita tu tarjeta Visa virtual recargable en solo unos minutos</p>
           
-        }
+          
+           <img src="https://i.postimg.cc/yWx2kLMh/6463554-1.png' border='0' alt='6463554-1'/></a>" alt="PayKard Visa Virtual" class="hero-image">
+            <a href="https://t.me/Mr_DevelopersWeb" class="telegram-button" target="_blank">
+                <i class="fab fa-telegram telegram-icon"></i>
+                Solicitar por Telegram
+            </a>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 PayKard. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+  
+  <!-- Botón flotante de soporte -->
+    <div class="floating-support">
+        <div class="support-message" id="supportMessage">
+            <button class="close-message" id="closeMessage">&times;</button>
+            <p>¿Necesitas ayuda? Estamos aquí para asistirte.</p>
+            <a href="https://t.me/Mr_DevelopersWeb" target="_blank">Contactar soporte por Telegram</a>
+        </div>
+        <button class="support-btn" id="supportBtn">
+            <i class="fas fa-headset"></i>
+        </button>
+    </div>
+  
+  <script>
+        // Funcionalidad para el botón de soporte flotante
+        const supportBtn = document.getElementById('supportBtn');
+        const supportMessage = document.getElementById('supportMessage');
+        const closeMessage = document.getElementById('closeMessage');
+        let messageTimeout;
+        
+        supportBtn.addEventListener('click', function() {
+            // Cancelar el timeout anterior si existe
+            if (messageTimeout) clearTimeout(messageTimeout);
+            
+            // Mostrar mensaje
+            supportMessage.classList.add('show');
+            
+            // Ocultar después de 3 segundos
+            messageTimeout = setTimeout(() => {
+                supportMessage.classList.remove('show');
+            }, 3000);
+        });
+        
+        closeMessage.addEventListener('click', function() {
+            supportMessage.classList.remove('show');
+            clearTimeout(messageTimeout);
+        });
+        
+        // Mostrar automáticamente al cargar la página (opcional)
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                supportMessage.classList.add('show');
+                messageTimeout = setTimeout(() => {
+                    supportMessage.classList.remove('show');
+                }, 3000);
+            }, 5000); // Mostrar después de 5 segundos
+        });
     </script>
-
-
-</body></html>
+</body>
+</html>
