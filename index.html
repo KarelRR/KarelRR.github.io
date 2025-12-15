@@ -1,0 +1,2197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoBank - Inversión en USDT</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #1a237e;
+            --secondary-blue: #283593;
+            --light-blue: #3949ab;
+            --primary-green: #00c853;
+            --secondary-green: #00e676;
+            --light-green: #69f0ae;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333333;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --border-radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: var(--dark-gray);
+            line-height: 1.6;
+            font-size: 15px; /* Tamaño de fuente reducido */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header & Navigation - Más delgado y simple */
+        header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
+            color: var(--white);
+            padding: 0.4rem 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.3rem; /* Tamaño reducido */
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            color: var(--primary-green);
+            margin-right: 8px;
+        }
+
+        .logo span {
+            color: var(--primary-green);
+        }
+
+        /* User Profile Dropdown - Solo a la derecha */
+        .user-profile {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .profile-icon {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.3rem; /* Tamaño reducido */
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background-color 0.3s;
+        }
+
+        .profile-icon:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: var(--white);
+            min-width: 180px; /* Ancho reducido */
+            border-radius: var(--border-radius);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            display: none;
+            z-index: 1000;
+            margin-top: 5px;
+        }
+
+        .dropdown-menu.show {
+            display: block;
+        }
+
+        .dropdown-item {
+            display: block;
+            padding: 10px 12px; /* Padding reducido */
+            color: var(--dark-gray);
+            text-decoration: none;
+            border-bottom: 1px solid #eee;
+            transition: background-color 0.3s;
+            font-size: 0.9rem; /* Tamaño de fuente reducido */
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--light-gray);
+            color: var(--primary-blue);
+        }
+
+        .dropdown-item i {
+            margin-right: 8px;
+            width: 16px;
+            text-align: center;
+            font-size: 0.9rem; /* Tamaño reducido */
+        }
+
+        .btn {
+            padding: 8px 16px; /* Tamaño reducido */
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 0.9rem; /* Tamaño reducido */
+        }
+
+        .btn-primary {
+            background-color: var(--primary-green);
+            color: var(--white);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-green);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--light-blue);
+            color: var(--white);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--secondary-blue);
+        }
+
+        /* Auth Forms */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+            padding: 1.5rem 0; /* Padding reducido */
+        }
+
+        .auth-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 450px; /* Ancho reducido */
+            padding: 1.5rem; /* Padding reducido */
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 1.5rem; /* Margen reducido */
+        }
+
+        .auth-header h2 {
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem; /* Tamaño reducido */
+        }
+
+        .auth-header p {
+            color: #666;
+            font-size: 0.9rem; /* Tamaño reducido */
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem; /* Margen reducido */
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-weight: 500;
+            color: var(--primary-blue);
+            font-size: 0.9rem; /* Tamaño reducido */
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 12px; /* Padding reducido */
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 0.9rem; /* Tamaño reducido */
+            transition: border 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-green);
+        }
+
+        .form-footer {
+            text-align: center;
+            margin-top: 1.2rem; /* Margen reducido */
+            color: #666;
+            font-size: 0.85rem; /* Tamaño reducido */
+        }
+
+        .form-footer a {
+            color: var(--primary-green);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Dashboard */
+        .dashboard-header {
+            padding: 1.5rem 0; /* Padding reducido */
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
+            color: var(--white);
+            border-radius: var(--border-radius);
+            margin: 1.5rem 0; /* Margen reducido */
+        }
+
+        .welcome-message {
+            font-size: 1.5rem; /* Tamaño reducido */
+            margin-bottom: 0.4rem;
+        }
+
+        /* Balance Cards - 2 columnas */
+        .balance-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 columnas */
+            gap: 1rem; /* Espacio reducido */
+            margin-bottom: 1.5rem;
+        }
+
+        .balance-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 1.2rem; /* Padding reducido */
+            text-align: center;
+        }
+
+        .balance-card h3 {
+            color: var(--primary-blue);
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem; /* Tamaño reducido */
+        }
+
+        .balance-amount {
+            font-size: 1.5rem; /* Tamaño reducido */
+            font-weight: 700;
+            color: var(--primary-green);
+            margin-bottom: 0.4rem;
+        }
+
+        .balance-subtitle {
+            color: #666;
+            font-size: 0.8rem; /* Tamaño reducido */
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem; /* Espacio reducido */
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .referral-section {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 1.2rem; /* Padding reducido */
+            margin-bottom: 1.5rem;
+        }
+
+        .referral-section h3 {
+            color: var(--primary-blue);
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem; /* Tamaño reducido */
+        }
+
+        .referral-code {
+            display: flex;
+            margin: 0.8rem 0; /* Margen reducido */
+        }
+
+        .referral-code input {
+            flex-grow: 1;
+            padding: 8px 12px; /* Padding reducido */
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius) 0 0 var(--border-radius);
+            font-size: 0.9rem; /* Tamaño reducido */
+        }
+
+        .referral-code button {
+            border-radius: 0 var(--border-radius) var(--border-radius) 0;
+        }
+
+        .referral-stats {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* 2 columnas */
+            gap: 0.8rem; /* Espacio reducido */
+            margin-top: 1.2rem;
+        }
+
+        .referral-stat {
+            text-align: center;
+            padding: 0.8rem; /* Padding reducido */
+            background-color: var(--light-gray);
+            border-radius: var(--border-radius);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            width: 90%;
+            max-width: 450px; /* Ancho reducido */
+            padding: 1.5rem; /* Padding reducido */
+            position: relative;
+            animation: modalFadeIn 0.3s;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem; /* Margen reducido */
+        }
+
+        .modal-header h3 {
+            color: var(--primary-blue);
+            font-size: 1.2rem; /* Tamaño reducido */
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.3rem; /* Tamaño reducido */
+            color: #666;
+            cursor: pointer;
+        }
+
+        .wallet-info {
+            background-color: var(--light-gray);
+            padding: 0.8rem; /* Padding reducido */
+            border-radius: var(--border-radius);
+            margin: 0.8rem 0; /* Margen reducido */
+            font-family: monospace;
+            word-break: break-all;
+            font-size: 0.85rem; /* Tamaño reducido */
+        }
+
+        .wallet-info p {
+            margin-bottom: 0.4rem;
+        }
+
+        /* History Section - Scroll Interno */
+        .history-section {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 1.2rem; /* Padding reducido */
+            margin-bottom: 1.5rem;
+        }
+
+        .history-section h3 {
+            color: var(--primary-blue);
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem; /* Tamaño reducido */
+        }
+
+        .scrollable-table-container {
+            max-height: 350px; /* Altura reducida */
+            overflow-y: auto;
+            border-radius: var(--border-radius);
+            border: 1px solid #ddd;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 700px; /* Ancho mínimo reducido */
+        }
+
+        th, td {
+            padding: 10px 12px; /* Padding reducido */
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            font-size: 0.85rem; /* Tamaño reducido */
+        }
+
+        th {
+            background-color: var(--light-gray);
+            color: var(--primary-blue);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            font-size: 0.9rem; /* Tamaño reducido */
+        }
+
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .status {
+            padding: 4px 8px; /* Padding reducido */
+            border-radius: 20px;
+            font-size: 0.75rem; /* Tamaño reducido */
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-completed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        /* Investment Info */
+        .investment-info {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 1.2rem; /* Padding reducido */
+            margin-bottom: 1.5rem;
+        }
+
+        .investment-info h3 {
+            color: var(--primary-blue);
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem; /* Tamaño reducido */
+        }
+
+        .progress-container {
+            margin: 1.2rem 0; /* Margen reducido */
+        }
+
+        .progress-bar {
+            height: 16px; /* Altura reducida */
+            background-color: #e0e0e0;
+            border-radius: 8px; /* Radio reducido */
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-green), var(--secondary-green));
+            border-radius: 8px; /* Radio reducido */
+            transition: width 0.5s ease;
+        }
+
+        .progress-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem; /* Tamaño reducido */
+            color: #666;
+        }
+
+        /* Footer - Solo CryptoBank, Seguridad y Copyright */
+        footer {
+            background-color: var(--primary-blue);
+            color: var(--white);
+            padding: 1.5rem 0; /* Padding reducido */
+            margin-top: 2rem; /* Margen reducido */
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Ancho reducido */
+            gap: 1.5rem; /* Espacio reducido */
+        }
+
+        .footer-section h4 {
+            margin-bottom: 0.8rem;
+            color: var(--primary-green);
+            font-size: 1rem; /* Tamaño reducido */
+        }
+
+        .footer-section p, .footer-section a {
+            color: #ddd;
+            margin-bottom: 0.4rem;
+            display: block;
+            text-decoration: none;
+            font-size: 0.85rem; /* Tamaño reducido */
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 1.5rem; /* Margen reducido */
+            padding-top: 0.8rem; /* Padding reducido */
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.8rem; /* Tamaño reducido */
+        }
+
+        /* FAQ Page Styles */
+        .faq-container {
+            max-width: 750px; /* Ancho reducido */
+            margin: 1.5rem auto; /* Margen reducido */
+            padding: 0 20px;
+        }
+
+        .faq-item {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 0.8rem; /* Margen reducido */
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.2rem; /* Padding reducido */
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            color: var(--primary-blue);
+            font-size: 0.95rem; /* Tamaño reducido */
+        }
+
+        .faq-answer {
+            padding: 0 1.2rem; /* Padding reducido */
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+            font-size: 0.9rem; /* Tamaño reducido */
+        }
+
+        .faq-answer.show {
+            padding: 0 1.2rem 1.2rem 1.2rem; /* Padding reducido */
+            max-height: 500px;
+        }
+
+        /* About Page Styles */
+        .about-container {
+            max-width: 850px; /* Ancho reducido */
+            margin: 1.5rem auto; /* Margen reducido */
+            padding: 0 20px;
+        }
+
+        .about-section {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 1.5rem; /* Padding reducido */
+            margin-bottom: 1.5rem;
+        }
+
+        .about-section h2 {
+            color: var(--primary-blue);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem; /* Tamaño reducido */
+        }
+
+        .about-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Ancho reducido */
+            gap: 1.2rem; /* Espacio reducido */
+            margin-top: 1.5rem;
+        }
+
+        .feature-card {
+            background-color: var(--light-gray);
+            padding: 1.2rem; /* Padding reducido */
+            border-radius: var(--border-radius);
+            text-align: center;
+        }
+
+        .feature-card i {
+            font-size: 1.5rem; /* Tamaño reducido */
+            color: var(--primary-green);
+            margin-bottom: 0.8rem;
+        }
+
+        /* Floating Support Bubble */
+        .support-bubble {
+            position: fixed;
+            bottom: 15px; /* Posición reducida */
+            right: 15px; /* Posición reducida */
+            width: 50px; /* Tamaño reducido */
+            height: 50px; /* Tamaño reducido */
+            background: linear-gradient(135deg, var(--primary-green), var(--secondary-green));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-size: 1.2rem; /* Tamaño reducido */
+            box-shadow: 0 4px 12px rgba(0, 200, 83, 0.4);
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .support-bubble:hover {
+            transform: scale(1.1);
+            box-shadow: 0 6px 15px rgba(0, 200, 83, 0.6);
+        }
+
+        .support-bubble-tooltip {
+            position: absolute;
+            bottom: 55px; /* Posición reducida */
+            right: 0;
+            background-color: var(--white);
+            color: var(--dark-gray);
+            padding: 8px 12px; /* Padding reducido */
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            font-size: 0.8rem; /* Tamaño reducido */
+            white-space: nowrap;
+            display: none;
+        }
+
+        .support-bubble:hover .support-bubble-tooltip {
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .balance-cards {
+                grid-template-columns: 1fr; /* 1 columna en móviles */
+            }
+            
+            .referral-stats {
+                grid-template-columns: 1fr; /* 1 columna en móviles */
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .action-buttons .btn {
+                width: 100%;
+                max-width: 280px; /* Ancho máximo reducido */
+            }
+            
+            .modal-content {
+                padding: 1.2rem; /* Padding reducido */
+            }
+            
+            .scrollable-table-container {
+                max-height: 300px;
+            }
+            
+            table {
+                min-width: 600px;
+            }
+            
+            .about-features {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Error & Success Messages */
+        .alert {
+            padding: 10px 12px; /* Padding reducido */
+            border-radius: var(--border-radius);
+            margin-bottom: 0.8rem; /* Margen reducido */
+            font-weight: 500;
+            font-size: 0.85rem; /* Tamaño reducido */
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert-info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .alert-warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* Additional Styles */
+        .btn-block {
+            display: block;
+            width: 100%;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        /* Transaction hash and wallet full display */
+        .full-hash, .full-wallet {
+            font-family: monospace;
+            font-size: 0.8rem; /* Tamaño reducido */
+            word-break: break-all;
+            background-color: #f8f9fa;
+            padding: 6px; /* Padding reducido */
+            border-radius: 4px;
+            margin: 4px 0;
+        }
+
+        .copy-btn {
+            background-color: var(--light-blue);
+            color: white;
+            border: none;
+            padding: 3px 6px; /* Padding reducido */
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem; /* Tamaño reducido */
+            margin-left: 4px;
+        }
+
+        .copy-btn:hover {
+            background-color: var(--secondary-blue);
+        }
+
+        /* Investment Button Styles */
+        .invest-info {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #ddd;
+        }
+
+        .invest-form-group {
+            margin: 12px 0;
+        }
+
+        .max-btn {
+            background-color: var(--light-blue);
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-left: 5px;
+        }
+
+        .max-btn:hover {
+            background-color: var(--secondary-blue);
+        }
+
+        /* Balance summary */
+        .balance-summary {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .summary-item {
+            background-color: var(--light-gray);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .summary-label {
+            font-size: 0.85rem;
+            color: #666;
+            margin-bottom: 4px;
+        }
+
+        .summary-value {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: var(--primary-blue);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header simplificado -->
+    <header>
+        <div class="container nav-container">
+            <div class="logo">
+                <i class="fas fa-coins"></i>
+                Crypto<span>Bank</span>
+            </div>
+            <div class="user-profile" id="user-profile">
+                <!-- User menu will be populated by JavaScript -->
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="container" id="main-content">
+        <!-- Content will be dynamically loaded here -->
+    </main>
+
+    <!-- Modals -->
+    <div id="deposit-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Depositar USDT</h3>
+                <button class="close-modal" id="close-deposit-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i> Depósito mínimo: 1 USDT. El balance se acreditará cuando el depósito sea confirmado.
+                </div>
+                <div class="form-group">
+                    <label for="deposit-amount">Monto a depositar (USDT)</label>
+                    <input type="number" id="deposit-amount" class="form-control" min="1" step="0.01" placeholder="Ej: 100">
+                </div>
+                <div class="form-group">
+                    <label for="deposit-hash">Hash de transacción</label>
+                    <input type="text" id="deposit-hash" class="form-control" placeholder="Ingresa el hash de la transacción">
+                </div>
+                <div class="wallet-info">
+                    <p><strong>Deposita a la siguiente wallet:</strong></p>
+                    <p id="deposit-wallet">TXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX</p>
+                    <p><small>Red: TRC20 (Tron)</small></p>
+                </div>
+                <button class="btn btn-primary btn-block" id="submit-deposit">Enviar depósito</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="withdraw-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Retirar USDT</h3>
+                <button class="close-modal" id="close-withdraw-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i> Retiro mínimo: 1 USDT. Los retiros se procesan en 24-48 horas.
+                </div>
+                <div class="alert alert-warning">
+                    <i class="fas fa-exclamation-triangle"></i> IMPORTANTE: El retiro se descontará inmediatamente de tu balance y no se puede cancelar.
+                </div>
+                <div class="form-group">
+                    <label for="withdraw-amount">Monto a retirar (USDT)</label>
+                    <input type="number" id="withdraw-amount" class="form-control" min="1" step="0.01" placeholder="Ej: 50">
+                </div>
+                <div class="form-group">
+                    <label for="withdraw-wallet">Wallet para recibir</label>
+                    <input type="text" id="withdraw-wallet" class="form-control" placeholder="Ingresa tu wallet">
+                </div>
+                <div class="form-group">
+                    <p>Disponible para retiro: <strong id="available-balance">0</strong> USDT</p>
+                </div>
+                <button class="btn btn-primary btn-block" id="submit-withdraw">Solicitar retiro</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Invest Modal -->
+    <div id="invest-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Invertir USDT</h3>
+                <button class="close-modal" id="close-invest-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i> Invierte desde tu balance disponible para comenzar a ganar el 1.5% diario.
+                </div>
+                
+                <div class="balance-summary">
+                    <div class="summary-item">
+                        <div class="summary-label">Balance Disponible</div>
+                        <div class="summary-value" id="modal-available-balance">0 USDT</div>
+                    </div>
+                    <div class="summary-item">
+                        <div class="summary-label">Balance Invertido</div>
+                        <div class="summary-value" id="modal-invested-balance">0 USDT</div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="invest-amount">Monto a invertir (USDT)</label>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <input type="number" id="invest-amount" class="form-control" min="1" step="0.01" placeholder="Ej: 50">
+                        <button class="max-btn" id="max-invest-btn">MÁX</button>
+                    </div>
+                    <small style="color: #666; display: block; margin-top: 5px;">Mínimo: 1 USDT</small>
+                </div>
+                
+                <div class="invest-info">
+                    <h4 style="color: var(--primary-blue); margin-bottom: 8px;">Proyección de ganancias:</h4>
+                    <div style="background-color: #f8f9fa; padding: 10px; border-radius: 8px;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 8px;">
+                            <div>
+                                <div style="font-size: 0.85rem; color: #666;">Ganancia diaria (1.5%)</div>
+                                <div style="font-weight: bold; color: var(--primary-green);" id="daily-earnings-projection">0 USDT</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.85rem; color: #666;">Total en 165 días</div>
+                                <div style="font-weight: bold; color: var(--light-blue);" id="total-projection">0 USDT</div>
+                            </div>
+                        </div>
+                        <div style="font-size: 0.8rem; color: #888; text-align: center;">
+                            Rendimiento total: 250% de tu inversión
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary btn-block" id="submit-invest">Confirmar Inversión</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Support Bubble -->
+    <a href="https://t.me/CryptoBank" target="_blank" class="support-bubble">
+        <i class="fas fa-headset"></i>
+        <div class="support-bubble-tooltip">
+            Soporte en Telegram
+        </div>
+    </a>
+
+    <!-- Footer (Solo CryptoBank, Seguridad y Copyright) -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>CryptoBank</h4>
+                    <p>Plataforma segura de inversión en USDT con rendimientos diarios garantizados.</p>
+                </div>
+                <div class="footer-section">
+                    <h4>Seguridad</h4>
+                    <p><i class="fas fa-shield-alt"></i> Plataforma 100% segura</p>
+                    <p><i class="fas fa-lock"></i> Transacciones encriptadas</p>
+                    <p><i class="fas fa-check-circle"></i> Certificación SSL</p>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 CryptoBank. Todos los derechos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // API endpoint
+        const API_URL = 'api.php';
+        
+        // Estado de la aplicación
+        let currentUser = null;
+        let userData = null;
+        
+        // Elementos del DOM
+        const mainContent = document.getElementById('main-content');
+        const userProfile = document.getElementById('user-profile');
+        
+        // Inicializar la aplicación
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAuthStatus();
+            setupEventListeners();
+        });
+        
+        // Verificar estado de autenticación
+        function checkAuthStatus() {
+            const token = localStorage.getItem('cryptobank_token');
+            const userId = localStorage.getItem('cryptobank_user_id');
+            
+            if (token && userId) {
+                // Usuario autenticado
+                fetchUserData(userId, token);
+            } else {
+                // Usuario no autenticado, mostrar login
+                showLoginForm();
+            }
+        }
+        
+        // Configurar listeners de eventos
+        function setupEventListeners() {
+            // Modales
+            document.getElementById('close-deposit-modal').addEventListener('click', () => {
+                document.getElementById('deposit-modal').style.display = 'none';
+            });
+            
+            document.getElementById('close-withdraw-modal').addEventListener('click', () => {
+                document.getElementById('withdraw-modal').style.display = 'none';
+            });
+            
+            document.getElementById('close-invest-modal').addEventListener('click', () => {
+                document.getElementById('invest-modal').style.display = 'none';
+            });
+            
+            // Cerrar modales al hacer clic fuera
+            window.addEventListener('click', (e) => {
+                if (e.target.classList.contains('modal')) {
+                    e.target.style.display = 'none';
+                }
+            });
+            
+            // Botones de acciones
+            document.addEventListener('click', (e) => {
+                if (e.target.id === 'deposit-btn') {
+                    document.getElementById('deposit-modal').style.display = 'flex';
+                }
+                
+                if (e.target.id === 'submit-deposit') {
+                    submitDeposit();
+                }
+                
+                if (e.target.id === 'withdraw-btn') {
+                    // Actualizar saldo disponible en el modal
+                    if (userData) {
+                        document.getElementById('available-balance').textContent = 
+                            parseFloat(userData.available_balance).toFixed(2);
+                    }
+                    document.getElementById('withdraw-modal').style.display = 'flex';
+                }
+                
+                if (e.target.id === 'submit-withdraw') {
+                    submitWithdrawal();
+                }
+                
+                if (e.target.id === 'invest-btn') {
+                    showInvestModal();
+                }
+                
+                if (e.target.id === 'submit-invest') {
+                    submitInvestment();
+                }
+                
+                if (e.target.id === 'max-invest-btn') {
+                    setMaxInvestment();
+                }
+            });
+            
+            // Actualizar proyección de inversión
+            document.getElementById('invest-amount')?.addEventListener('input', updateInvestmentProjection);
+        }
+        
+        // Mostrar formulario de login
+        function showLoginForm() {
+            currentUser = null;
+            updateNavigation();
+            
+            mainContent.innerHTML = `
+                <div class="auth-container">
+                    <div class="auth-card">
+                        <div class="auth-header">
+                            <h2>Iniciar Sesión</h2>
+                            <p>Accede a tu cuenta de CryptoBank</p>
+                        </div>
+                        <div id="auth-message"></div>
+                        <form id="login-form">
+                            <div class="form-group">
+                                <label for="login-email">Email</label>
+                                <input type="email" id="login-email" class="form-control" required placeholder="tucorreo@ejemplo.com">
+                            </div>
+                            <div class="form-group">
+                                <label for="login-password">Contraseña</label>
+                                <input type="password" id="login-password" class="form-control" required placeholder="Tu contraseña">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
+                        </form>
+                        <div class="form-footer">
+                            <p>¿No tienes una cuenta? <a href="#" id="show-register">Regístrate aquí</a></p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('login-form').addEventListener('submit', handleLogin);
+            document.getElementById('show-register').addEventListener('click', (e) => {
+                e.preventDefault();
+                showRegisterForm();
+            });
+        }
+        
+        // Mostrar formulario de registro con validación de email y teléfono
+        function showRegisterForm() {
+            mainContent.innerHTML = `
+                <div class="auth-container">
+                    <div class="auth-card">
+                        <div class="auth-header">
+                            <h2>Crear Cuenta</h2>
+                            <p>Regístrate en CryptoBank y comienza a invertir</p>
+                        </div>
+                        <div id="auth-message"></div>
+                        <form id="register-form">
+                            <div class="form-group">
+                                <label for="register-name">Nombre completo</label>
+                                <input type="text" id="register-name" class="form-control" required placeholder="Tu nombre completo">
+                            </div>
+                            <div class="form-group">
+                                <label for="register-username">Nombre de usuario</label>
+                                <input type="text" id="register-username" class="form-control" required placeholder="Nombre de usuario único">
+                            </div>
+                            <div class="form-group">
+                                <label for="register-email">Email</label>
+                                <input type="email" id="register-email" class="form-control" required placeholder="tucorreo@ejemplo.com">
+                                <div id="email-error" style="color: #dc3545; font-size: 0.8rem; margin-top: 4px; display: none;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="register-phone">Teléfono</label>
+                                <input type="tel" id="register-phone" class="form-control" required placeholder="+1234567890">
+                                <div id="phone-error" style="color: #dc3545; font-size: 0.8rem; margin-top: 4px; display: none;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="register-password">Contraseña</label>
+                                <input type="password" id="register-password" class="form-control" required placeholder="Crea una contraseña segura">
+                            </div>
+                            <div class="form-group">
+                                <label for="register-referral">Código de referido (opcional)</label>
+                                <input type="text" id="register-referral" class="form-control" placeholder="Código de referido si tienes">
+                            </div>
+                            <button type="submit" class="btn btn-primary btn-block">Crear Cuenta</button>
+                        </form>
+                        <div class="form-footer">
+                            <p>¿Ya tienes una cuenta? <a href="#" id="show-login">Inicia sesión aquí</a></p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Validación en tiempo real de email y teléfono
+            document.getElementById('register-email').addEventListener('blur', validateEmail);
+            document.getElementById('register-phone').addEventListener('blur', validatePhone);
+            
+            document.getElementById('register-form').addEventListener('submit', handleRegister);
+            document.getElementById('show-login').addEventListener('click', (e) => {
+                e.preventDefault();
+                showLoginForm();
+            });
+        }
+        
+        // Validar email en tiempo real
+        async function validateEmail() {
+            const email = document.getElementById('register-email').value;
+            const emailError = document.getElementById('email-error');
+            
+            if (!email) return;
+            
+            // Validación básica de formato
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                emailError.textContent = 'Formato de email inválido';
+                emailError.style.display = 'block';
+                return false;
+            }
+            
+            // Verificar si el email ya está en uso
+            try {
+                // Para esto necesitaríamos una API que verifique emails existentes
+                // Por ahora solo validamos formato
+                emailError.style.display = 'none';
+                return true;
+            } catch (error) {
+                console.error('Error validating email:', error);
+                return false;
+            }
+        }
+        
+        // Validar teléfono en tiempo real
+        async function validatePhone() {
+            const phone = document.getElementById('register-phone').value;
+            const phoneError = document.getElementById('phone-error');
+            
+            if (!phone) return;
+            
+            // Validación básica de formato (número con + opcional)
+            const phoneRegex = /^\+?[\d\s\-\(\)]+$/;
+            if (!phoneRegex.test(phone) || phone.length < 8) {
+                phoneError.textContent = 'Formato de teléfono inválido';
+                phoneError.style.display = 'block';
+                return false;
+            }
+            
+            phoneError.style.display = 'none';
+            return true;
+        }
+        
+        // Manejar login
+        async function handleLogin(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        action: 'login',
+                        email: email,
+                        password: password
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Guardar token y datos de usuario
+                    localStorage.setItem('cryptobank_token', data.token);
+                    localStorage.setItem('cryptobank_user_id', data.user.id);
+                    
+                    currentUser = data.user;
+                    userData = data.user;
+                    
+                    showAlert('Inicio de sesión exitoso', 'success');
+                    showDashboard();
+                } else {
+                    showAlert(data.message || 'Error en el inicio de sesión', 'error');
+                }
+            } catch (error) {
+                showAlert('Error de conexión', 'error');
+                console.error('Login error:', error);
+            }
+        }
+        
+        // Manejar registro con validación de email y teléfono
+        async function handleRegister(e) {
+            e.preventDefault();
+            
+            // Validar campos antes de enviar
+            const emailValid = await validateEmail();
+            const phoneValid = await validatePhone();
+            
+            if (!emailValid || !phoneValid) {
+                showAlert('Por favor, corrige los errores en el formulario', 'error');
+                return;
+            }
+            
+            const userData = {
+                action: 'register',
+                name: document.getElementById('register-name').value,
+                username: document.getElementById('register-username').value,
+                email: document.getElementById('register-email').value,
+                phone: document.getElementById('register-phone').value,
+                password: document.getElementById('register-password').value,
+                referral_code: document.getElementById('register-referral').value || ''
+            };
+            
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(userData)
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showAlert('Cuenta creada exitosamente. Ahora puedes iniciar sesión.', 'success');
+                    showLoginForm();
+                } else {
+                    showAlert(data.message || 'Error en el registro', 'error');
+                }
+            } catch (error) {
+                showAlert('Error de conexión', 'error');
+                console.error('Register error:', error);
+            }
+        }
+        
+        // Obtener datos del usuario
+        async function fetchUserData(userId, token) {
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        action: 'get_user',
+                        user_id: userId,
+                        token: token
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    currentUser = data.user;
+                    userData = data.user;
+                    updateNavigation();
+                    showDashboard();
+                } else {
+                    // Token inválido o expirado
+                    localStorage.removeItem('cryptobank_token');
+                    localStorage.removeItem('cryptobank_user_id');
+                    showLoginForm();
+                }
+            } catch (error) {
+                console.error('Error fetching user data:', error);
+            }
+        }
+        
+        // Mostrar dashboard
+        function showDashboard() {
+            if (!userData) return;
+            
+            updateNavigation();
+            
+            // Calcular días transcurridos desde el inicio de la inversión
+            const investedBalance = parseFloat(userData.invested_balance || 0);
+            const totalDays = 165;
+            let daysPassed = 0;
+            let totalGenerated = parseFloat(userData.total_earned || 0);
+            
+            if (investedBalance > 0 && userData.investment_start_date) {
+                const startDate = new Date(userData.investment_start_date);
+                const currentDate = new Date();
+                const diffTime = Math.abs(currentDate - startDate);
+                daysPassed = Math.min(Math.floor(diffTime / (1000 * 60 * 60 * 24)), totalDays);
+                
+                // Calcular ganancias diarias (1.5% diario)
+                const dailyEarnings = investedBalance * 0.015;
+                
+                // Calcular ganancias acumuladas hasta hoy
+                if (daysPassed > 0) {
+                    totalGenerated = dailyEarnings * daysPassed;
+                }
+            }
+            
+            // Calcular porcentaje completado
+            const progressPercentage = Math.min((daysPassed / totalDays) * 100, 100);
+            
+            // Calcular ganancias diarias actuales
+            const currentDailyEarnings = investedBalance * 0.015;
+            
+            // Calcular total proyectado (250%)
+            const totalProjected = investedBalance * 2.5;
+            
+            mainContent.innerHTML = `
+                <div class="dashboard-header">
+                    <h1 class="welcome-message">¡Hola, ${userData.name}!</h1>
+                    <p>Bienvenido a tu panel de control de CryptoBank</p>
+                </div>
+                
+                <div class="balance-cards">
+                    <div class="balance-card">
+                        <h3>Balance Invertido</h3>
+                        <div class="balance-amount">${investedBalance.toFixed(2)} USDT</div>
+                        <p class="balance-subtitle">Capital en inversión</p>
+                    </div>
+                    <div class="balance-card">
+                        <h3>Balance Disponible</h3>
+                        <div class="balance-amount">${parseFloat(userData.available_balance || 0).toFixed(2)} USDT</div>
+                        <p class="balance-subtitle">Disponible para retiro/inversión</p>
+                    </div>
+                    <div class="balance-card">
+                        <h3>Ganancias Diarias (1.5%)</h3>
+                        <div class="balance-amount">${currentDailyEarnings.toFixed(2)} USDT</div>
+                        <p class="balance-subtitle">Se añaden cada 24h</p>
+                    </div>
+                    <div class="balance-card">
+                        <h3>Total Generado</h3>
+                        <div class="balance-amount">${totalGenerated.toFixed(2)} USDT</div>
+                        <p class="balance-subtitle">Ganancias acumuladas</p>
+                    </div>
+                </div>
+                
+                <div class="investment-info">
+                    <h3>Progreso de Inversión</h3>
+                    <p>Tu inversión genera el 1.5% diario durante 165 días (250% total)</p>
+                    
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress" style="width: ${progressPercentage}%"></div>
+                        </div>
+                        <div class="progress-info">
+                            <span>Día ${daysPassed} de ${totalDays}</span>
+                            <span>${progressPercentage.toFixed(1)}% completado</span>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-top: 1.5rem;">
+                        <div style="text-align: center;">
+                            <h4>Total Proyectado</h4>
+                            <div class="balance-amount" style="font-size: 1.2rem;">${totalProjected.toFixed(2)} USDT</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <h4>Ganancias Restantes</h4>
+                            <div class="balance-amount" style="font-size: 1.2rem; color: var(--light-blue);">${(totalProjected - investedBalance - totalGenerated).toFixed(2)} USDT</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="deposit-btn">
+                        <i class="fas fa-plus-circle"></i> Depositar
+                    </button>
+                    <button class="btn btn-secondary" id="withdraw-btn">
+                        <i class="fas fa-minus-circle"></i> Retirar
+                    </button>
+                    <button class="btn btn-primary" id="invest-btn">
+                        <i class="fas fa-chart-line"></i> Invertir
+                    </button>
+                    <button class="btn btn-secondary" id="referrals-btn">
+                        <i class="fas fa-users"></i> Referidos
+                    </button>
+                </div>
+                
+                <div class="referral-section">
+                    <h3>Sistema de Referidos</h3>
+                    <p>Invita amigos y gana el 10% de todos sus depósitos</p>
+                    <div class="referral-code">
+                        <input type="text" id="referral-code-display" value="${userData.referral_code}" readonly>
+                        <button class="btn btn-primary" id="copy-referral-code">
+                            <i class="fas fa-copy"></i> Copiar
+                        </button>
+                    </div>
+                    <div class="referral-stats">
+                        <div class="referral-stat">
+                            <h4>${userData.referrals_count || 0}</h4>
+                            <p>Referidos Totales</p>
+                        </div>
+                        <div class="referral-stat">
+                            <h4>${parseFloat(userData.referral_earnings || 0).toFixed(2)} USDT</h4>
+                            <p>Ganancias por Referidos</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="history-section">
+                    <h3>Historial de Transacciones</h3>
+                    <div class="scrollable-table-container">
+                        <table id="transactions-table">
+                            <thead>
+                                <tr>
+                                    <th>Fecha</th>
+                                    <th>Tipo</th>
+                                    <th>Monto</th>
+                                    <th>Estado</th>
+                                    <th>Detalles</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${generateTransactionsTable()}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            `;
+            
+            // Agregar event listeners a los botones
+            document.getElementById('referrals-btn').addEventListener('click', showReferrals);
+            
+            // Agregar listeners para botones de copiar en transacciones
+            document.querySelectorAll('.copy-hash-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const hash = this.getAttribute('data-hash');
+                    navigator.clipboard.writeText(hash).then(() => {
+                        showAlert('Hash copiado al portapapeles', 'success');
+                    });
+                });
+            });
+            
+            document.querySelectorAll('.copy-wallet-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const wallet = this.getAttribute('data-wallet');
+                    navigator.clipboard.writeText(wallet).then(() => {
+                        showAlert('Wallet copiada al portapapeles', 'success');
+                    });
+                });
+            });
+        }
+        
+        // Mostrar modal de inversión
+        function showInvestModal() {
+            if (!userData) return;
+            
+            const availableBalance = parseFloat(userData.available_balance || 0);
+            const investedBalance = parseFloat(userData.invested_balance || 0);
+            
+            // Actualizar balances en el modal
+            document.getElementById('modal-available-balance').textContent = availableBalance.toFixed(2) + ' USDT';
+            document.getElementById('modal-invested-balance').textContent = investedBalance.toFixed(2) + ' USDT';
+            
+            // Resetear monto de inversión
+            document.getElementById('invest-amount').value = '';
+            
+            // Actualizar proyección
+            updateInvestmentProjection();
+            
+            document.getElementById('invest-modal').style.display = 'flex';
+        }
+        
+        // Establecer inversión máxima
+        function setMaxInvestment() {
+            if (!userData) return;
+            
+            const availableBalance = parseFloat(userData.available_balance || 0);
+            document.getElementById('invest-amount').value = availableBalance.toFixed(2);
+            updateInvestmentProjection();
+        }
+        
+        // Actualizar proyección de inversión
+        function updateInvestmentProjection() {
+            const amountInput = document.getElementById('invest-amount');
+            if (!amountInput) return;
+            
+            const amount = parseFloat(amountInput.value) || 0;
+            
+            // Calcular ganancias diarias (1.5%)
+            const dailyEarnings = amount * 0.015;
+            
+            // Calcular total en 165 días (250%)
+            const totalProjection = amount * 2.5;
+            
+            // Actualizar UI
+            document.getElementById('daily-earnings-projection').textContent = dailyEarnings.toFixed(2) + ' USDT';
+            document.getElementById('total-projection').textContent = totalProjection.toFixed(2) + ' USDT';
+        }
+        
+        // Enviar inversión
+        async function submitInvestment() {
+            if (!userData) return;
+            
+            const amount = parseFloat(document.getElementById('invest-amount').value);
+            const availableBalance = parseFloat(userData.available_balance || 0);
+            
+            if (isNaN(amount) || amount < 1) {
+                showAlert('El monto mínimo de inversión es 1 USDT', 'error');
+                return;
+            }
+            
+            if (amount > availableBalance) {
+                showAlert('Fondos insuficientes para esta inversión', 'error');
+                return;
+            }
+            
+            // Confirmar inversión
+            const confirmMessage = `¿Estás seguro de invertir ${amount} USDT?\n\n` +
+                                 `• Se transferirá de tu balance disponible al balance invertido\n` +
+                                 `• Comenzarás a ganar el 1.5% diario inmediatamente\n` +
+                                 `• La inversión durará 165 días (250% total)\n` +
+                                 `• No podrás retirar este monto hasta completar el período`;
+            
+            if (!confirm(confirmMessage)) {
+                return;
+            }
+            
+            // Aquí implementarías la llamada a la API para procesar la inversión
+            // Por ahora simulamos el proceso
+            
+            try {
+                // En un sistema real, aquí harías una llamada a la API
+                // const response = await fetch(API_URL, {
+                //     method: 'POST',
+                //     headers: { 'Content-Type': 'application/json' },
+                //     body: JSON.stringify({
+                //         action: 'invest',
+                //         user_id: currentUser.id,
+                //         token: localStorage.getItem('cryptobank_token'),
+                //         amount: amount
+                //     })
+                // });
+                
+                // Por ahora, simulamos la actualización
+                showAlert(`Inversión de ${amount} USDT procesada exitosamente. Comenzarás a ganar el 1.5% diario.`, 'success');
+                
+                // Actualizar balances localmente (en un sistema real esto vendría del servidor)
+                userData.available_balance = availableBalance - amount;
+                userData.invested_balance = parseFloat(userData.invested_balance || 0) + amount;
+                
+                // Si es la primera inversión, establecer fecha de inicio
+                if (!userData.investment_start_date) {
+                    userData.investment_start_date = new Date().toISOString();
+                }
+                
+                document.getElementById('invest-modal').style.display = 'none';
+                showDashboard();
+                
+            } catch (error) {
+                showAlert('Error al procesar la inversión', 'error');
+                console.error('Investment error:', error);
+            }
+        }
+        
+        // Mostrar FAQ
+        function showFAQ() {
+            updateNavigation();
+            
+            mainContent.innerHTML = `
+                <div class="faq-container">
+                    <h1 style="color: var(--primary-blue); margin-bottom: 1.5rem; text-align: center;">
+                        <i class="fas fa-question-circle"></i> Preguntas Frecuentes
+                    </h1>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>¿Qué es CryptoBank?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>CryptoBank es una plataforma de inversión en USDT que genera ganancias diarias del 1.5% mediante minería y trading algorítmico. Ofrecemos rendimientos garantizados durante 165 días, alcanzando un retorno total del 250%.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>¿Cómo funcionan las ganancias del 1.5% diario?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Nuestro sistema automatizado invierte en minería de criptomonedas y trading algorítmico avanzado. Cada día se calcula el 1.5% sobre tu balance invertido y se suma a tus ganancias. Este proceso continúa durante 165 días hasta alcanzar el 250% de tu inversión inicial.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>¿Cuál es el mínimo y máximo para invertir?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Mínimo de inversión: 1 USDT<br>
+                            No hay máximo de inversión. Puedes aumentar tu inversión en cualquier momento realizando nuevos depósitos que se sumarán a tu balance invertido.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>¿Cómo retiro mis ganancias?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Puedes retirar tus ganancias en cualquier momento desde la sección "Retirar" en tu dashboard. El mínimo de retiro es 1 USDT y los fondos se envían a tu wallet en 24-48 horas hábiles. Tu capital invertido continúa generando ganancias incluso después de retirar.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>¿Cómo funciona el sistema de referidos?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Gana el 10% de comisión de TODOS los depósitos que realicen tus referidos. Las comisiones se acreditan instantáneamente a tu balance disponible cuando sus depósitos son confirmados. No hay límite en la cantidad de referidos ni en las ganancias que puedes obtener.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>¿Es seguro invertir en CryptoBank?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Sí, CryptoBank utiliza tecnología blockchain para garantizar transparencia y seguridad. Todas las transacciones son encriptadas y verificadas. Nuestra plataforma opera con sistemas de minería y trading probados que minimizan riesgos mientras maximizan ganancias.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>¿Qué red debo usar para depositar USDT?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Aceptamos USDT en la red TRC20 (Tron) por sus bajas comisiones y rápida confirmación. Asegúrate de enviar tus fondos desde una wallet compatible con TRC20 y de incluir el hash de transacción para su verificación.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="action-buttons" style="margin-top: 1.5rem;">
+                        <button class="btn btn-primary" id="back-to-dashboard-faq">
+                            <i class="fas fa-arrow-left"></i> Volver al Dashboard
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            // Agregar funcionalidad a las preguntas frecuentes
+            document.querySelectorAll('.faq-question').forEach(question => {
+                question.addEventListener('click', function() {
+                    const answer = this.nextElementSibling;
+                    const icon = this.querySelector('i');
+                    
+                    answer.classList.toggle('show');
+                    icon.classList.toggle('fa-chevron-down');
+                    icon.classList.toggle('fa-chevron-up');
+                });
+            });
+            
+            document.getElementById('back-to-dashboard-faq').addEventListener('click', showDashboard);
+        }
+        
+        // Mostrar página "Sobre CryptoBank"
+        function showAbout() {
+            updateNavigation();
+            
+            mainContent.innerHTML = `
+                <div class="about-container">
+                    <div class="about-section">
+                        <h1 style="color: var(--primary-blue); margin-bottom: 1rem;">
+                            <i class="fas fa-coins"></i> Sobre CryptoBank
+                        </h1>
+                        <p style="font-size: 1rem; line-height: 1.6;">
+                            CryptoBank es una plataforma revolucionaria de inversión en criptomonedas que combina la potencia de la minería de última generación con algoritmos avanzados de trading automatizado para generar rendimientos consistentes y garantizados.
+                        </p>
+                    </div>
+                    
+                    <div class="about-section">
+                        <h2><i class="fas fa-chart-line"></i> Nuestra Tecnología</h2>
+                        <p>Utilizamos una infraestructura de minería de alto rendimiento con equipos ASIC especializados y granjas de servidores ubicadas estratégicamente en regiones con energía de bajo costo. Nuestro sistema de trading algorítmico opera 24/7 en los principales exchanges del mundo, aprovechando oportunidades de arbitraje y tendencias del mercado.</p>
+                    </div>
+                    
+                    <div class="about-section">
+                        <h2><i class="fas fa-cogs"></i> ¿Cómo Generamos las Ganancias?</h2>
+                        <p>Las ganancias del 1.5% diario provienen de dos fuentes principales:</p>
+                        <ul style="padding-left: 20px; margin: 12px 0;">
+                            <li><strong>Minería de Criptomonedas:</strong> Operamos una red de equipos de minería que generan nuevas criptomonedas constantemente.</li>
+                            <li><strong>Trading Algorítmico:</strong> Nuestros bots de trading ejecutan miles de operaciones diarias aprovechando pequeñas variaciones de precio en múltiples exchanges.</li>
+                            <li><strong>Staking y Liquidez:</strong> Parte de los fondos se destinan a pools de liquidez y staking que generan rendimientos pasivos.</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="about-section">
+                        <h2><i class="fas fa-shield-alt"></i> Seguridad y Transparencia</h2>
+                        <p>Todas las transacciones se registran en la blockchain para garantizar total transparencia. Implementamos múltiples capas de seguridad incluyendo encriptación AES-256, autenticación de dos factores y almacenamiento en cold wallets para la mayor parte de los fondos.</p>
+                    </div>
+                    
+                    <div class="about-features">
+                        <div class="feature-card">
+                            <i class="fas fa-bolt"></i>
+                            <h4>Rendimiento Garantizado</h4>
+                            <p>1.5% diario durante 165 días</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-users"></i>
+                            <h4>Sistema de Referidos</h4>
+                            <p>10% de comisión por cada referido</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-lock"></i>
+                            <h4>100% Seguro</h4>
+                            <p>Tecnología blockchain avanzada</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-rocket"></i>
+                            <h4>Retiros Rápidos</h4>
+                            <p>24-48 horas hábiles</p>
+                        </div>
+                    </div>
+                    
+                    <div class="about-section" style="text-align: center;">
+                        <h2><i class="fas fa-comments"></i> ¿Necesitas Ayuda?</h2>
+                        <p>Únete a nuestra comunidad en Telegram para soporte inmediato y actualizaciones:</p>
+                        <a href="https://t.me/CryptoBankCH" target="_blank" class="btn btn-primary" style="margin-top: 0.8rem;">
+                            <i class="fab fa-telegram"></i> Unirse a @CryptoBankCH
+                        </a>
+                    </div>
+                    
+                    <div class="action-buttons" style="margin-top: 1.5rem;">
+                        <button class="btn btn-primary" id="back-to-dashboard-about">
+                            <i class="fas fa-arrow-left"></i> Volver al Dashboard
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('back-to-dashboard-about').addEventListener('click', showDashboard);
+        }
+        
+        // Mostrar página de referidos
+        function showReferrals() {
+            if (!userData) return;
+            
+            updateNavigation();
+            
+            mainContent.innerHTML = `
+                <div class="dashboard-header">
+                    <h1>Sistema de Referidos</h1>
+                    <p>Gana comisiones invitando amigos a CryptoBank</p>
+                </div>
+                
+                <div class="referral-section">
+                    <h3>Tu Código de Referido</h3>
+                    <p>Comparte este código con amigos para que se registren</p>
+                    <div class="referral-code">
+                        <input type="text" id="referral-code-display" value="${userData.referral_code}" readonly>
+                        <button class="btn btn-primary" id="copy-referral-code">
+                            <i class="fas fa-copy"></i> Copiar
+                        </button>
+                    </div>
+                    <p>También puedes compartir este enlace: <strong>https://cryptobank.com/register?ref=${userData.referral_code}</strong></p>
+                </div>
+                
+                <div class="referral-section">
+                    <h3>Cómo funciona</h3>
+                    <ul style="padding-left: 20px; margin-top: 12px;">
+                        <li>Tu amigo se registra usando tu código de referido</li>
+                        <li>Recibirás el 10% de COMISIÓN de TODOS sus depósitos confirmados</li>
+                        <li>Las comisiones se acreditan inmediatamente a tu balance disponible</li>
+                        <li>No hay límite en la cantidad de referidos que puedes invitar</li>
+                        <li>Ganancias por referidos: <strong>10% de cada depósito confirmado</strong></li>
+                    </ul>
+                </div>
+                
+                <div class="referral-section">
+                    <h3>Tus Estadísticas</h3>
+                    <div class="referral-stats">
+                        <div class="referral-stat">
+                            <h4>${userData.referrals_count || 0}</h4>
+                            <p>Referidos Totales</p>
+                        </div>
+                        <div class="referral-stat">
+                            <h4>${parseFloat(userData.referral_earnings || 0).toFixed(2)} USDT</h4>
+                            <p>Ganancias Totales</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-primary" id="back-to-dashboard">
+                        <i class="fas fa-arrow-left"></i> Volver al Dashboard
+                    </button>
+                </div>
+            `;
+            
+            document.getElementById('back-to-dashboard').addEventListener('click', showDashboard);
+        }
+        
+        // Generar tabla de transacciones con información completa
+        function generateTransactionsTable() {
+            if (!userData.transactions || userData.transactions.length === 0) {
+                return '<tr><td colspan="5" style="text-align: center; padding: 1.5rem;">No hay transacciones aún</td></tr>';
+            }
+            
+            // Ordenar transacciones por fecha (más recientes primero)
+            const sortedTransactions = [...userData.transactions].sort((a, b) => 
+                new Date(b.date) - new Date(a.date)
+            );
+            
+            return sortedTransactions.map(transaction => {
+                let details = '';
+                if (transaction.type === 'deposit' && transaction.transaction_hash) {
+                    details = `
+                        <div style="margin-top: 4px;">
+                            <strong>Hash:</strong>
+                            <div class="full-hash">${transaction.transaction_hash}</div>
+                            <button class="copy-btn copy-hash-btn" data-hash="${transaction.transaction_hash}">
+                                <i class="fas fa-copy"></i> Copiar
+                            </button>
+                        </div>
+                    `;
+                } else if (transaction.type === 'withdrawal' && transaction.wallet) {
+                    details = `
+                        <div style="margin-top: 4px;">
+                            <strong>Wallet:</strong>
+                            <div class="full-wallet">${transaction.wallet}</div>
+                            <button class="copy-btn copy-wallet-btn" data-wallet="${transaction.wallet}">
+                                <i class="fas fa-copy"></i> Copiar
+                            </button>
+                        </div>
+                    `;
+                }
+                
+                return `
+                    <tr>
+                        <td>${formatDate(transaction.date)}</td>
+                        <td>
+                            <span style="font-weight: 600; color: ${transaction.type === 'deposit' ? 'var(--primary-green)' : 'var(--light-blue)'};">
+                                ${transaction.type === 'deposit' ? 'Depósito' : 'Retiro'}
+                            </span>
+                        </td>
+                        <td><strong>${parseFloat(transaction.amount).toFixed(2)} USDT</strong></td>
+                        <td>
+                            <span class="status ${transaction.status === 'completed' ? 'status-completed' : 'status-pending'}">
+                                ${transaction.status === 'completed' ? 'Completado' : 'Pendiente'}
+                            </span>
+                        </td>
+                        <td style="max-width: 280px; word-break: break-word;">
+                            ${details}
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+        
+        // Formatear fecha
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('es-ES', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+        
+        // Enviar depósito
+        async function submitDeposit() {
+            const amount = parseFloat(document.getElementById('deposit-amount').value);
+            const hash = document.getElementById('deposit-hash').value.trim();
+            
+            if (amount < 1) {
+                showAlert('El monto mínimo de depósito es 1 USDT', 'error');
+                return;
+            }
+            
+            if (!hash) {
+                showAlert('Debes ingresar el hash de la transacción', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        action: 'deposit',
+                        user_id: currentUser.id,
+                        token: localStorage.getItem('cryptobank_token'),
+                        amount: amount,
+                        transaction_hash: hash
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showAlert('Depósito enviado para revisión. El balance se acreditará cuando sea confirmado.', 'success');
+                    document.getElementById('deposit-modal').style.display = 'none';
+                    // Limpiar formulario
+                    document.getElementById('deposit-amount').value = '';
+                    document.getElementById('deposit-hash').value = '';
+                    // Actualizar datos del usuario
+                    fetchUserData(currentUser.id, localStorage.getItem('cryptobank_token'));
+                } else {
+                    showAlert(data.message || 'Error en el depósito', 'error');
+                }
+            } catch (error) {
+                showAlert('Error de conexión', 'error');
+                console.error('Deposit error:', error);
+            }
+        }
+        
+        // Enviar retiro
+        async function submitWithdrawal() {
+            const amount = parseFloat(document.getElementById('withdraw-amount').value);
+            const wallet = document.getElementById('withdraw-wallet').value.trim();
+            const availableBalance = parseFloat(userData.available_balance || 0);
+            
+            if (amount < 1) {
+                showAlert('El monto mínimo de retiro es 1 USDT', 'error');
+                return;
+            }
+            
+            if (amount > availableBalance) {
+                showAlert('Fondos insuficientes para este retiro', 'error');
+                return;
+            }
+            
+            if (!wallet) {
+                showAlert('Debes ingresar una wallet para recibir', 'error');
+                return;
+            }
+            
+            // Confirmación adicional para retiros
+            const confirmMessage = `¿Estás seguro de solicitar un retiro de ${amount} USDT?\n\n` +
+                                 `• Se descontará inmediatamente de tu balance disponible\n` +
+                                 `• No podrás cancelar esta solicitud\n` +
+                                 `• El procesamiento toma 24-48 horas\n\n` +
+                                 `Wallet destino: ${wallet}`;
+            
+            if (!confirm(confirmMessage)) {
+                return;
+            }
+            
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        action: 'withdraw',
+                        user_id: currentUser.id,
+                        token: localStorage.getItem('cryptobank_token'),
+                        amount: amount,
+                        wallet: wallet
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showAlert('Retiro solicitado exitosamente. El monto se ha descontado de tu balance disponible.', 'success');
+                    document.getElementById('withdraw-modal').style.display = 'none';
+                    // Limpiar formulario
+                    document.getElementById('withdraw-amount').value = '';
+                    document.getElementById('withdraw-wallet').value = '';
+                    // Actualizar datos del usuario
+                    fetchUserData(currentUser.id, localStorage.getItem('cryptobank_token'));
+                } else {
+                    showAlert(data.message || 'Error en el retiro', 'error');
+                }
+            } catch (error) {
+                showAlert('Error de conexión', 'error');
+                console.error('Withdrawal error:', error);
+            }
+        }
+        
+        // Actualizar navegación con dropdown
+        function updateNavigation() {
+            if (currentUser) {
+                // Usuario logueado - solo icono de perfil
+                userProfile.innerHTML = `
+                    <button class="profile-icon" id="profile-menu-toggle">
+                        <i class="fas fa-user-circle"></i>
+                    </button>
+                    <div class="dropdown-menu" id="dropdown-menu">
+                        <a href="#" class="dropdown-item" id="dropdown-dashboard">
+                            <i class="fas fa-tachometer-alt"></i> Dashboard
+                        </a>
+                        <a href="#" class="dropdown-item" id="dropdown-referrals">
+                            <i class="fas fa-users"></i> Referidos
+                        </a>
+                        <a href="#" class="dropdown-item" id="dropdown-faq">
+                            <i class="fas fa-question-circle"></i> Preguntas Frecuentes
+                        </a>
+                        <a href="#" class="dropdown-item" id="dropdown-about">
+                            <i class="fas fa-info-circle"></i> Sobre CryptoBank
+                        </a>
+                        <a href="https://t.me/CryptoBankCH" target="_blank" class="dropdown-item">
+                            <i class="fab fa-telegram"></i> Telegram @CryptoBankCH
+                        </a>
+                        <div style="border-top: 1px solid #eee;"></div>
+                        <a href="#" class="dropdown-item" id="dropdown-logout" style="color: #dc3545;">
+                            <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                        </a>
+                    </div>
+                `;
+                
+                // Agregar event listeners
+                document.getElementById('profile-menu-toggle').addEventListener('click', toggleDropdown);
+                
+                // Dropdown items
+                document.getElementById('dropdown-dashboard').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    closeDropdown();
+                    showDashboard();
+                });
+                
+                document.getElementById('dropdown-referrals').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    closeDropdown();
+                    showReferrals();
+                });
+                
+                document.getElementById('dropdown-faq').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    closeDropdown();
+                    showFAQ();
+                });
+                
+                document.getElementById('dropdown-about').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    closeDropdown();
+                    showAbout();
+                });
+                
+                document.getElementById('dropdown-logout').addEventListener('click', (e) => {
+                    e.preventDefault();
+                    closeDropdown();
+                    logout();
+                });
+                
+            } else {
+                // Usuario no logueado - sin icono
+                userProfile.innerHTML = '';
+            }
+        }
+        
+        // Toggle dropdown menu
+        function toggleDropdown(e) {
+            e.stopPropagation();
+            const menu = document.getElementById('dropdown-menu');
+            menu.classList.toggle('show');
+        }
+        
+        // Close dropdown menu
+        function closeDropdown() {
+            const menu = document.getElementById('dropdown-menu');
+            if (menu) {
+                menu.classList.remove('show');
+            }
+        }
+        
+        // Cerrar dropdown al hacer clic fuera
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.user-profile')) {
+                closeDropdown();
+            }
+        });
+        
+        // Cerrar sesión
+        function logout() {
+            localStorage.removeItem('cryptobank_token');
+            localStorage.removeItem('cryptobank_user_id');
+            currentUser = null;
+            userData = null;
+            showLoginForm();
+        }
+        
+        // Mostrar alerta
+        function showAlert(message, type) {
+            // Eliminar alerta anterior si existe
+            const existingAlert = document.querySelector('.alert');
+            if (existingAlert) {
+                existingAlert.remove();
+            }
+            
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type === 'error' ? 'error' : 'success'}`;
+            alertDiv.innerHTML = `<i class="fas fa-${type === 'error' ? 'exclamation-circle' : 'check-circle'}"></i> ${message}`;
+            
+            // Insertar alerta en la posición correcta
+            const authMessage = document.getElementById('auth-message');
+            if (authMessage) {
+                authMessage.appendChild(alertDiv);
+            } else {
+                // Insertar al principio del main content
+                mainContent.insertBefore(alertDiv, mainContent.firstChild);
+            }
+            
+            // Auto-eliminar después de 5 segundos
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    alertDiv.remove();
+                }
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

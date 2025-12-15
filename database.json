@@ -1,0 +1,123 @@
+{
+    "users": {
+        "693f72c2605b74.53405530": {
+            "id": "693f72c2605b74.53405530",
+            "name": "Karel Reynaldo Reyes ",
+            "username": "KarelRR",
+            "email": "michelitochampion@gmail.com",
+            "phone": "+5358613006",
+            "password": "$2y$10$1rAW\/6lnmjSKZoXJAOjcCubFUzOD3OuwErC9gqnrr\/KsYC6lfZxPm",
+            "referral_code": "KAR33793E",
+            "referred_by": "",
+            "invested_balance": 100,
+            "available_balance": 1010,
+            "total_earned": 0,
+            "referrals_count": 2,
+            "referral_earnings": 110,
+            "investment_start_date": "2025-12-14 21:31:30",
+            "registration_date": "2025-12-14 21:30:26",
+            "last_login": "2025-12-14 22:50:07",
+            "token": "1453d624acf281ddc1636fb1fea59d3f814d1cc3565aa57f5ecdee37427f4082"
+        },
+        "693f733c32bd57.26546774": {
+            "id": "693f733c32bd57.26546774",
+            "name": "Prueba",
+            "username": "Prueba",
+            "email": "prueba@gmail.com",
+            "phone": "+5358613006",
+            "password": "$2y$10$4fVugfKRfklA0fJtXkpqfOTavHTjq7Q0mRJBLcjdcoIaABRTj0.hi",
+            "referral_code": "PRUEBBAF9",
+            "referred_by": "KAR33793E",
+            "invested_balance": 1000,
+            "available_balance": 0,
+            "total_earned": 0,
+            "referrals_count": 0,
+            "referral_earnings": 0,
+            "investment_start_date": "2025-12-14 21:33:23",
+            "registration_date": "2025-12-14 21:32:28",
+            "last_login": "2025-12-14 21:32:52",
+            "token": "ad729fce15ee83b10b018c9d486d4555d3432927f39bf96527e0a8765014d725"
+        },
+        "693f853935b2f3.15977970": {
+            "id": "693f853935b2f3.15977970",
+            "name": "Michel",
+            "username": "MichelitoRR",
+            "email": "michelito@gmail.com",
+            "phone": "+5358613005",
+            "password": "$2y$10$v\/ht1GqhYMA18d\/z7kJ.ceKAkBNTcEZUJYstsDOGGI5SNpaIPHpFi",
+            "referral_code": "MICC333E9",
+            "referred_by": "KAR33793E",
+            "invested_balance": 0,
+            "available_balance": 100,
+            "total_earned": 0,
+            "referrals_count": 0,
+            "referral_earnings": 0,
+            "investment_start_date": null,
+            "registration_date": "2025-12-14 22:49:13",
+            "last_login": "2025-12-14 22:49:42",
+            "token": "677161158f41079af71890d80f35b189ae24b51b3b7420b1c6eaaa1661e2bdf1"
+        }
+    },
+    "transactions": [
+        {
+            "id": "693f72e1cb0652.41263868",
+            "user_id": "693f72c2605b74.53405530",
+            "type": "deposit",
+            "amount": 100,
+            "transaction_hash": "Jsjsjss",
+            "status": "completed",
+            "date": "2025-12-14 21:30:57",
+            "completion_date": "2025-12-14 21:31:30"
+        },
+        {
+            "id": "693f735ee22a73.98833918",
+            "user_id": "693f733c32bd57.26546774",
+            "type": "deposit",
+            "amount": 1000,
+            "transaction_hash": "Jdjdjdjdj",
+            "status": "completed",
+            "date": "2025-12-14 21:33:02",
+            "completion_date": "2025-12-14 21:33:23"
+        },
+        {
+            "id": "693f73ca2116a3.63573284",
+            "user_id": "693f72c2605b74.53405530",
+            "type": "withdrawal",
+            "amount": 50,
+            "wallet": "Jsjsjsjskedk",
+            "status": "completed",
+            "date": "2025-12-14 21:34:50",
+            "completion_date": "2025-12-14 21:35:16"
+        },
+        {
+            "id": "693f847c78cea1.07612766",
+            "user_id": "693f72c2605b74.53405530",
+            "type": "deposit",
+            "amount": 1000,
+            "transaction_hash": "Jsjsjs",
+            "status": "completed",
+            "date": "2025-12-14 22:46:04",
+            "completion_date": "2025-12-14 22:46:16"
+        },
+        {
+            "id": "693f84bb0aeb86.17429151",
+            "user_id": "693f72c2605b74.53405530",
+            "type": "withdrawal",
+            "amount": 50,
+            "wallet": "Jsjsjsjksjsjssjsjdjsjsjjdjejejjejejejejejejejejejejejejjejej",
+            "status": "completed",
+            "date": "2025-12-14 22:47:07",
+            "completion_date": "2025-12-14 22:47:30"
+        },
+        {
+            "id": "693f8561f28c08.42311818",
+            "user_id": "693f853935b2f3.15977970",
+            "type": "deposit",
+            "amount": 100,
+            "transaction_hash": "Kjwjwjw",
+            "status": "completed",
+            "date": "2025-12-14 22:49:53",
+            "completion_date": "2025-12-14 22:50:26"
+        }
+    ]
+}

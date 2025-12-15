@@ -1,0 +1,2016 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CryptoBank - Panel de Administración</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-blue: #1a237e;
+            --secondary-blue: #283593;
+            --light-blue: #3949ab;
+            --primary-green: #00c853;
+            --secondary-green: #00e676;
+            --light-green: #69f0ae;
+            --white: #ffffff;
+            --light-gray: #f5f5f5;
+            --dark-gray: #333333;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --border-radius: 12px;
+            --danger: #dc3545;
+            --warning: #ffc107;
+            --info: #17a2b8;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f8f9fa;
+            color: var(--dark-gray);
+            line-height: 1.6;
+            font-size: 15px; /* Tamaño de fuente reducido */
+        }
+
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Admin - Más delgado */
+        .admin-header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
+            color: var(--white);
+            padding: 0.6rem 0; /* Padding reducido */
+            box-shadow: var(--shadow);
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem; /* Margen reducido */
+        }
+
+        .admin-header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1.5rem; /* Padding reducido */
+        }
+
+        .admin-logo {
+            font-size: 1.3rem; /* Tamaño reducido */
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+
+        .admin-logo i {
+            color: var(--primary-green);
+            margin-right: 8px; /* Margen reducido */
+        }
+
+        .admin-logo span {
+            color: var(--primary-green);
+        }
+
+        /* Login Form */
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
+        }
+
+        .login-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            width: 100%;
+            max-width: 380px; /* Ancho reducido */
+            padding: 1.8rem; /* Padding reducido */
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 1.5rem; /* Margen reducido */
+        }
+
+        .login-header h2 {
+            color: var(--primary-blue);
+            margin-bottom: 0.4rem;
+            font-size: 1.4rem; /* Tamaño reducido */
+        }
+
+        .login-header i {
+            font-size: 2.5rem; /* Tamaño reducido */
+            color: var(--primary-blue);
+            margin-bottom: 0.8rem; /* Margen reducido */
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem; /* Margen reducido */
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.4rem;
+            font-weight: 500;
+            color: var(--primary-blue);
+            font-size: 0.9rem; /* Tamaño reducido */
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 10px 12px; /* Padding reducido */
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 0.9rem; /* Tamaño reducido */
+            transition: border 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-green);
+        }
+
+        /* Dashboard */
+        .stats-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Ancho reducido */
+            gap: 1rem; /* Espacio reducido */
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 1.2rem; /* Padding reducido */
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-card h3 {
+            color: var(--primary-blue);
+            margin-bottom: 0.8rem; /* Margen reducido */
+            font-size: 0.9rem; /* Tamaño reducido */
+        }
+
+        .stat-value {
+            font-size: 1.5rem; /* Tamaño reducido */
+            font-weight: 700;
+            color: var(--primary-green);
+            margin-bottom: 0.4rem; /* Margen reducido */
+        }
+
+        .stat-subtitle {
+            color: #666;
+            font-size: 0.8rem; /* Tamaño reducido */
+        }
+
+        /* Tabs */
+        .admin-tabs {
+            display: flex;
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .tab {
+            padding: 0.8rem 1.5rem; /* Padding reducido */
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+            flex: 1;
+            text-align: center;
+            font-size: 0.9rem; /* Tamaño reducido */
+        }
+
+        .tab:hover {
+            background-color: var(--light-gray);
+        }
+
+        .tab.active {
+            color: var(--primary-green);
+            border-bottom-color: var(--primary-green);
+            background-color: var(--light-gray);
+        }
+
+        /* Tables */
+        .table-section {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            padding: 1.2rem; /* Padding reducido */
+            margin-bottom: 1.5rem;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem; /* Margen reducido */
+            flex-wrap: wrap;
+            gap: 0.8rem; /* Espacio reducido */
+        }
+
+        .section-header h3 {
+            color: var(--primary-blue);
+            margin: 0;
+            font-size: 1.1rem; /* Tamaño reducido */
+        }
+
+        .scrollable-table-container {
+            max-height: 450px; /* Altura reducida */
+            overflow-y: auto;
+            border-radius: var(--border-radius);
+            border: 1px solid #eee;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px; /* Ancho mínimo reducido */
+        }
+
+        th, td {
+            padding: 10px 12px; /* Padding reducido */
+            text-align: left;
+            border-bottom: 1px solid #eee;
+            font-size: 0.85rem; /* Tamaño reducido */
+        }
+
+        th {
+            background-color: var(--light-gray);
+            color: var(--primary-blue);
+            font-weight: 600;
+            position: sticky;
+            top: 0;
+            font-size: 0.9rem; /* Tamaño reducido */
+        }
+
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        .btn {
+            padding: 7px 14px; /* Tamaño reducido */
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px; /* Espacio reducido */
+            font-size: 0.85rem; /* Tamaño reducido */
+        }
+
+        .btn-success {
+            background-color: var(--primary-green);
+            color: var(--white);
+        }
+
+        .btn-success:hover {
+            background-color: var(--secondary-green);
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: var(--white);
+        }
+
+        .btn-danger:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+
+        .btn-warning {
+            background-color: var(--warning);
+            color: var(--dark-gray);
+        }
+
+        .btn-warning:hover {
+            background-color: #e0a800;
+            transform: translateY(-2px);
+        }
+
+        .btn-info {
+            background-color: var(--info);
+            color: var(--white);
+        }
+
+        .btn-info:hover {
+            background-color: #138496;
+            transform: translateY(-2px);
+        }
+
+        .btn-small {
+            padding: 4px 8px; /* Tamaño reducido */
+            font-size: 0.8rem; /* Tamaño reducido */
+        }
+
+        /* Status */
+        .status {
+            padding: 4px 8px; /* Padding reducido */
+            border-radius: 20px;
+            font-size: 0.75rem; /* Tamaño reducido */
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+
+        .status-completed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            padding: 15px; /* Padding reducido */
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            width: 100%;
+            max-width: 650px; /* Ancho reducido */
+            padding: 1.5rem; /* Padding reducido */
+            position: relative;
+            animation: modalFadeIn 0.3s;
+            max-height: 85vh; /* Altura reducida */
+            overflow-y: auto;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem; /* Margen reducido */
+        }
+
+        .modal-header h3 {
+            color: var(--primary-blue);
+            font-size: 1.2rem; /* Tamaño reducido */
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.3rem; /* Tamaño reducido */
+            color: #666;
+            cursor: pointer;
+            line-height: 1;
+        }
+
+        /* Alerts */
+        .alert {
+            padding: 10px 12px; /* Padding reducido */
+            border-radius: var(--border-radius);
+            margin-bottom: 0.8rem; /* Margen reducido */
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 8px; /* Espacio reducido */
+            font-size: 0.85rem; /* Tamaño reducido */
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .alert-info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+
+        .alert-warning {
+            background-color: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        /* Users Management */
+        .user-actions {
+            display: flex;
+            gap: 6px; /* Espacio reducido */
+            flex-wrap: wrap;
+        }
+
+        /* Search and Filters */
+        .search-box {
+            padding: 8px 12px; /* Padding reducido */
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            min-width: 220px; /* Ancho reducido */
+            font-size: 0.85rem; /* Tamaño reducido */
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: var(--primary-green);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 2rem; /* Padding reducido */
+            color: #666;
+        }
+
+        .empty-state i {
+            font-size: 2.5rem; /* Tamaño reducido */
+            color: #ddd;
+            margin-bottom: 0.8rem; /* Margen reducido */
+        }
+
+        /* Loading */
+        .loading {
+            display: inline-block;
+            width: 18px; /* Tamaño reducido */
+            height: 18px; /* Tamaño reducido */
+            border: 2px solid #f3f3f3; /* Grosor reducido */
+            border-top: 2px solid var(--primary-green); /* Grosor reducido */
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .admin-container {
+                padding: 10px;
+            }
+
+            .admin-header-content {
+                flex-direction: column;
+                text-align: center;
+                padding: 0 1rem;
+            }
+
+            .admin-logo {
+                margin-bottom: 0.8rem; /* Margen reducido */
+            }
+
+            .admin-tabs {
+                flex-direction: column;
+            }
+
+            .tab {
+                text-align: center;
+                border-bottom: 1px solid #eee;
+                border-left: 3px solid transparent;
+                border-bottom: none;
+            }
+
+            .tab.active {
+                border-left-color: var(--primary-green);
+                border-bottom: none;
+            }
+
+            .section-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .search-box {
+                width: 100%;
+                min-width: auto;
+            }
+
+            .login-card {
+                margin: 15px; /* Margen reducido */
+                padding: 1.2rem; /* Padding reducido */
+            }
+
+            .modal-content {
+                padding: 1.2rem; /* Padding reducido */
+                margin: 15px; /* Margen reducido */
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .user-actions {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Full hash and wallet display */
+        .full-hash, .full-wallet {
+            font-family: monospace;
+            font-size: 0.8rem; /* Tamaño reducido */
+            word-break: break-all;
+            background-color: #f8f9fa;
+            padding: 6px; /* Padding reducido */
+            border-radius: 4px;
+            margin: 4px 0;
+            max-width: 280px; /* Ancho reducido */
+        }
+
+        .copy-btn {
+            background-color: var(--light-blue);
+            color: white;
+            border: none;
+            padding: 3px 6px; /* Padding reducido */
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.75rem; /* Tamaño reducido */
+            margin-top: 4px;
+        }
+
+        .copy-btn:hover {
+            background-color: var(--secondary-blue);
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Form -->
+    <div id="login-section" class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <i class="fas fa-lock"></i>
+                <h2>Panel de Administración</h2>
+                <p>Acceso restringido para administradores</p>
+            </div>
+            <div id="login-message"></div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="admin-password">Contraseña de Administrador</label>
+                    <input type="password" id="admin-password" class="form-control" required 
+                           placeholder="Ingresa la contraseña" autocomplete="off">
+                </div>
+                <button type="submit" class="btn btn-success btn-block">
+                    <i class="fas fa-sign-in-alt"></i> Acceder
+                </button>
+            </form>
+            <div style="margin-top: 1.2rem; text-align: center; color: #666; font-size: 0.85rem;">
+                <p>Contraseña por defecto: <strong>AdminCryptoBank2024!</strong></p>
+                <p style="font-size: 0.75rem; color: #888; margin-top: 0.4rem;">
+                    Cambia esta contraseña en el archivo api.php después de la instalación
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Dashboard -->
+    <div id="admin-dashboard" class="admin-container" style="display: none;">
+        <!-- Header -->
+        <div class="admin-header">
+            <div class="admin-header-content">
+                <div class="admin-logo">
+                    <i class="fas fa-cogs"></i>
+                    Crypto<span>Bank</span> Admin
+                </div>
+                <button class="btn btn-danger" id="admin-logout">
+                    <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-cards">
+            <div class="stat-card">
+                <h3>Total Usuarios</h3>
+                <div class="stat-value" id="total-users">0</div>
+                <p class="stat-subtitle">Usuarios registrados</p>
+            </div>
+            <div class="stat-card">
+                <h3>Depósitos Pendientes</h3>
+                <div class="stat-value" id="pending-deposits">0</div>
+                <p class="stat-subtitle">Esperando confirmación</p>
+            </div>
+            <div class="stat-card">
+                <h3>Retiros Pendientes</h3>
+                <div class="stat-value" id="pending-withdrawals">0</div>
+                <p class="stat-subtitle">Esperando procesamiento</p>
+            </div>
+            <div class="stat-card">
+                <h3>Total Invertido</h3>
+                <div class="stat-value" id="total-invested">0 USDT</div>
+                <p class="stat-subtitle">Capital total invertido</p>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="admin-tabs">
+            <div class="tab active" data-tab="deposits">
+                <i class="fas fa-money-bill-wave"></i> Depósitos Pendientes
+            </div>
+            <div class="tab" data-tab="withdrawals">
+                <i class="fas fa-wallet"></i> Retiros Pendientes
+            </div>
+            <div class="tab" data-tab="users">
+                <i class="fas fa-users"></i> Gestión de Usuarios
+            </div>
+            <div class="tab" data-tab="transactions">
+                <i class="fas fa-exchange-alt"></i> Todas las Transacciones
+            </div>
+        </div>
+
+        <!-- Deposits Tab -->
+        <div id="deposits-tab" class="table-section">
+            <div class="section-header">
+                <h3><i class="fas fa-money-bill-wave"></i> Depósitos Pendientes de Confirmación</h3>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                    <button class="btn btn-info" id="refresh-deposits">
+                        <i class="fas fa-sync-alt"></i> Actualizar
+                    </button>
+                </div>
+            </div>
+            <div class="scrollable-table-container">
+                <table id="deposits-table">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Usuario</th>
+                            <th>Email</th>
+                            <th>Monto</th>
+                            <th>Hash</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="deposits-tbody">
+                        <!-- Deposits will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Withdrawals Tab -->
+        <div id="withdrawals-tab" class="table-section" style="display: none;">
+            <div class="section-header">
+                <h3><i class="fas fa-wallet"></i> Retiros Pendientes de Procesamiento</h3>
+                <div style="display: flex; gap: 8px; align-items: center;">
+                    <button class="btn btn-info" id="refresh-withdrawals">
+                        <i class="fas fa-sync-alt"></i> Actualizar
+                    </button>
+                </div>
+            </div>
+            <div class="scrollable-table-container">
+                <table id="withdrawals-table">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Usuario</th>
+                            <th>Email</th>
+                            <th>Monto</th>
+                            <th>Wallet</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="withdrawals-tbody">
+                        <!-- Withdrawals will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Users Tab -->
+        <div id="users-tab" class="table-section" style="display: none;">
+            <div class="section-header">
+                <h3><i class="fas fa-users"></i> Usuarios Registrados</h3>
+                <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                    <input type="text" class="search-box" id="user-search" placeholder="Buscar usuario...">
+                    <button class="btn btn-info" id="refresh-users">
+                        <i class="fas fa-sync-alt"></i> Actualizar
+                    </button>
+                </div>
+            </div>
+            <div class="scrollable-table-container">
+                <table id="users-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Email</th>
+                            <th>Usuario</th>
+                            <th>Balance Invertido</th>
+                            <th>Balance Disponible</th>
+                            <th>Fecha Registro</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="users-tbody">
+                        <!-- Users will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Transactions Tab -->
+        <div id="transactions-tab" class="table-section" style="display: none;">
+            <div class="section-header">
+                <h3><i class="fas fa-exchange-alt"></i> Todas las Transacciones</h3>
+                <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+                    <input type="text" class="search-box" id="transaction-search" placeholder="Buscar transacción...">
+                    <button class="btn btn-info" id="refresh-transactions">
+                        <i class="fas fa-sync-alt"></i> Actualizar
+                    </button>
+                </div>
+            </div>
+            <div class="scrollable-table-container">
+                <table id="transactions-table">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Tipo</th>
+                            <th>Usuario</th>
+                            <th>Monto</th>
+                            <th>Estado</th>
+                            <th>Detalles</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactions-tbody">
+                        <!-- Transactions will be loaded here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmation-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-question-circle"></i> Confirmar Acción</h3>
+                <button class="close-modal" id="close-confirmation-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="confirmation-message" style="margin-bottom: 1.2rem; font-size: 0.9rem;"></p>
+                <div style="display: flex; gap: 8px; margin-top: 15px;">
+                    <button class="btn btn-success" id="confirm-action">
+                        <i class="fas fa-check"></i> Confirmar
+                    </button>
+                    <button class="btn btn-danger" id="cancel-action">
+                        <i class="fas fa-times"></i> Cancelar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- User Details Modal -->
+    <div id="user-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-user"></i> Detalles del Usuario</h3>
+                <button class="close-modal" id="close-user-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="user-details"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transaction Details Modal -->
+    <div id="transaction-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-info-circle"></i> Detalles de Transacción</h3>
+                <button class="close-modal" id="close-transaction-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="transaction-details"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // API endpoint único
+        const API_URL = 'api.php';
+        
+        // Estado de autenticación
+        let isAuthenticated = false;
+        let adminPassword = '';
+        
+        // Datos cargados
+        let currentData = {
+            deposits: [],
+            withdrawals: [],
+            users: [],
+            transactions: []
+        };
+        
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            checkAdminAuth();
+            setupEventListeners();
+        });
+        
+        // Verificar autenticación
+        function checkAdminAuth() {
+            const savedAuth = localStorage.getItem('cryptobank_admin_auth');
+            if (savedAuth) {
+                try {
+                    const authData = JSON.parse(savedAuth);
+                    // Validar por 2 horas (7200000 ms)
+                    if (authData.authenticated && authData.timestamp > Date.now() - 7200000) {
+                        isAuthenticated = true;
+                        adminPassword = authData.password;
+                        showAdminDashboard();
+                        loadDashboardData();
+                    } else {
+                        localStorage.removeItem('cryptobank_admin_auth');
+                    }
+                } catch (e) {
+                    localStorage.removeItem('cryptobank_admin_auth');
+                }
+            }
+        }
+        
+        // Configurar event listeners
+        function setupEventListeners() {
+            // Login
+            document.getElementById('login-form').addEventListener('submit', handleLogin);
+            
+            // Logout
+            document.getElementById('admin-logout').addEventListener('click', logout);
+            
+            // Tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    switchTab(this.dataset.tab);
+                });
+            });
+            
+            // Refresh buttons
+            document.getElementById('refresh-deposits').addEventListener('click', loadPendingDeposits);
+            document.getElementById('refresh-withdrawals').addEventListener('click', loadPendingWithdrawals);
+            document.getElementById('refresh-users').addEventListener('click', loadUsers);
+            document.getElementById('refresh-transactions').addEventListener('click', loadAllTransactions);
+            
+            // Search
+            document.getElementById('user-search').addEventListener('input', filterUsers);
+            document.getElementById('transaction-search').addEventListener('input', filterTransactions);
+            
+            // Modal close buttons
+            document.getElementById('close-confirmation-modal').addEventListener('click', () => {
+                document.getElementById('confirmation-modal').style.display = 'none';
+            });
+            
+            document.getElementById('close-user-modal').addEventListener('click', () => {
+                document.getElementById('user-modal').style.display = 'none';
+            });
+            
+            document.getElementById('close-transaction-modal').addEventListener('click', () => {
+                document.getElementById('transaction-modal').style.display = 'none';
+            });
+            
+            // Close modals on outside click
+            window.addEventListener('click', (e) => {
+                if (e.target.classList.contains('modal')) {
+                    e.target.style.display = 'none';
+                }
+            });
+            
+            // Cancel action
+            document.getElementById('cancel-action').addEventListener('click', () => {
+                document.getElementById('confirmation-modal').style.display = 'none';
+            });
+            
+            // Enter key en búsqueda
+            document.getElementById('user-search').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    filterUsers();
+                }
+            });
+            
+            document.getElementById('transaction-search').addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    filterTransactions();
+                }
+            });
+        }
+        
+        // Manejar login
+        async function handleLogin(e) {
+            e.preventDefault();
+            
+            const password = document.getElementById('admin-password').value;
+            const loginBtn = e.target.querySelector('button[type="submit"]');
+            const originalText = loginBtn.innerHTML;
+            
+            // Mostrar loading
+            loginBtn.innerHTML = '<div class="loading"></div> Verificando...';
+            loginBtn.disabled = true;
+            
+            try {
+                // Primero probar con una acción simple
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        action: 'get_dashboard_stats'
+                    })
+                });
+                
+                // Si la API responde, intentar autenticar
+                if (response.ok) {
+                    // Ahora probar con la contraseña
+                    const authResponse = await fetch(API_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            action: 'get_pending_deposits',
+                            password: password
+                        })
+                    });
+                    
+                    const data = await authResponse.json();
+                    
+                    if (data.success || (data.message && !data.message.includes('Acceso no autorizado'))) {
+                        // Guardar autenticación
+                        isAuthenticated = true;
+                        adminPassword = password;
+                        localStorage.setItem('cryptobank_admin_auth', JSON.stringify({
+                            authenticated: true,
+                            password: password,
+                            timestamp: Date.now()
+                        }));
+                        
+                        showAlert('Acceso concedido', 'success');
+                        showAdminDashboard();
+                        loadDashboardData();
+                    } else {
+                        showAlert('Contraseña incorrecta', 'error');
+                    }
+                } else {
+                    showAlert('Error: API no responde. Verifica que api.php esté en el servidor.', 'error');
+                }
+            } catch (error) {
+                console.error('Login error:', error);
+                showAlert('Error de conexión. Verifica: 1) Que api.php existe 2) Permisos correctos 3) Servidor funcionando', 'error');
+            } finally {
+                // Restaurar botón
+                loginBtn.innerHTML = originalText;
+                loginBtn.disabled = false;
+            }
+        }
+        
+        // Cerrar sesión
+        function logout() {
+            isAuthenticated = false;
+            adminPassword = '';
+            localStorage.removeItem('cryptobank_admin_auth');
+            document.getElementById('admin-dashboard').style.display = 'none';
+            document.getElementById('login-section').style.display = 'flex';
+            showAlert('Sesión cerrada exitosamente', 'success');
+        }
+        
+        // Mostrar dashboard de administración
+        function showAdminDashboard() {
+            document.getElementById('login-section').style.display = 'none';
+            document.getElementById('admin-dashboard').style.display = 'block';
+        }
+        
+        // Cambiar pestañas
+        function switchTab(tabName) {
+            // Ocultar todas las pestañas
+            document.querySelectorAll('.table-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Remover clase activa de todas las pestañas
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Mostrar pestaña seleccionada
+            document.getElementById(`${tabName}-tab`).style.display = 'block';
+            
+            // Marcar pestaña como activa
+            document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+            
+            // Cargar datos de la pestaña si es necesario
+            switch(tabName) {
+                case 'deposits':
+                    if (currentData.deposits.length === 0) loadPendingDeposits();
+                    break;
+                case 'withdrawals':
+                    if (currentData.withdrawals.length === 0) loadPendingWithdrawals();
+                    break;
+                case 'users':
+                    if (currentData.users.length === 0) loadUsers();
+                    break;
+                case 'transactions':
+                    if (currentData.transactions.length === 0) loadAllTransactions();
+                    break;
+            }
+        }
+        
+        // Cargar datos del dashboard
+        async function loadDashboardData() {
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        action: 'get_dashboard_stats'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    const stats = data.stats;
+                    
+                    // Actualizar UI
+                    document.getElementById('total-users').textContent = stats.total_users;
+                    document.getElementById('pending-deposits').textContent = stats.pending_deposits;
+                    document.getElementById('pending-withdrawals').textContent = stats.pending_withdrawals;
+                    document.getElementById('total-invested').textContent = stats.total_invested.toFixed(2) + ' USDT';
+                    
+                } else {
+                    console.error('Error loading stats:', data.message);
+                }
+                
+                // También cargar datos para las pestañas
+                await Promise.all([
+                    loadPendingDeposits(),
+                    loadPendingWithdrawals(),
+                    loadUsers()
+                ]);
+                
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+                showAlert('Error al cargar datos del dashboard', 'error');
+            }
+        }
+        
+        // Cargar depósitos pendientes
+        async function loadPendingDeposits() {
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        action: 'get_pending_deposits',
+                        password: adminPassword
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    currentData.deposits = data.deposits || [];
+                    renderDepositsTable();
+                } else {
+                    showAlert(data.message || 'Error al cargar depósitos', 'error');
+                }
+            } catch (error) {
+                console.error('Error loading deposits:', error);
+                showAlert('Error de conexión', 'error');
+            }
+        }
+        
+        // Renderizar tabla de depósitos con hash completo
+        function renderDepositsTable() {
+            const tbody = document.getElementById('deposits-tbody');
+            
+            if (!currentData.deposits || currentData.deposits.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="empty-state">
+                            <i class="fas fa-check-circle"></i>
+                            <h4>No hay depósitos pendientes</h4>
+                            <p>Todos los depósitos han sido confirmados</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            let html = '';
+            currentData.deposits.forEach(deposit => {
+                html += `
+                    <tr>
+                        <td>${formatDate(deposit.date)}</td>
+                        <td>
+                            <strong>${deposit.user_name}</strong>
+                            <div style="font-size: 0.75rem; color: #666;">ID: ${deposit.user_id.substring(0, 8)}...</div>
+                        </td>
+                        <td>${deposit.user_email}</td>
+                        <td><strong>${parseFloat(deposit.amount).toFixed(2)} USDT</strong></td>
+                        <td>
+                            <div class="full-hash">${deposit.transaction_hash}</div>
+                            <button class="copy-btn copy-hash-btn" data-hash="${deposit.transaction_hash}">
+                                <i class="fas fa-copy"></i> Copiar Hash
+                            </button>
+                        </td>
+                        <td>
+                            <div class="user-actions">
+                                <button class="btn btn-success btn-small confirm-deposit" 
+                                        data-id="${deposit.transaction_id}"
+                                        data-user="${deposit.user_name}"
+                                        data-amount="${deposit.amount}">
+                                    <i class="fas fa-check"></i> Confirmar
+                                </button>
+                                <button class="btn btn-danger btn-small delete-deposit" 
+                                        data-id="${deposit.transaction_id}">
+                                    <i class="fas fa-trash"></i> Eliminar
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            tbody.innerHTML = html;
+            
+            // Agregar event listeners
+            document.querySelectorAll('.confirm-deposit').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    confirmDeposit(
+                        this.dataset.id,
+                        this.dataset.user,
+                        this.dataset.amount
+                    );
+                });
+            });
+            
+            document.querySelectorAll('.delete-deposit').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    deleteDeposit(this.dataset.id);
+                });
+            });
+            
+            // Agregar listeners para copiar hash
+            document.querySelectorAll('.copy-hash-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const hash = this.getAttribute('data-hash');
+                    navigator.clipboard.writeText(hash).then(() => {
+                        showAlert('Hash copiado al portapapeles', 'success');
+                    });
+                });
+            });
+        }
+        
+        // Cargar retiros pendientes
+        async function loadPendingWithdrawals() {
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        action: 'get_pending_withdrawals',
+                        password: adminPassword
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    currentData.withdrawals = data.withdrawals || [];
+                    renderWithdrawalsTable();
+                } else {
+                    showAlert(data.message || 'Error al cargar retiros', 'error');
+                }
+            } catch (error) {
+                console.error('Error loading withdrawals:', error);
+                showAlert('Error de conexión', 'error');
+            }
+        }
+        
+        // Renderizar tabla de retiros con wallet completa
+        function renderWithdrawalsTable() {
+            const tbody = document.getElementById('withdrawals-tbody');
+            
+            if (!currentData.withdrawals || currentData.withdrawals.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="empty-state">
+                            <i class="fas fa-check-circle"></i>
+                            <h4>No hay retiros pendientes</h4>
+                            <p>Todos los retiros han sido procesados</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            let html = '';
+            currentData.withdrawals.forEach(withdrawal => {
+                html += `
+                    <tr>
+                        <td>${formatDate(withdrawal.date)}</td>
+                        <td>
+                            <strong>${withdrawal.user_name}</strong>
+                            <div style="font-size: 0.75rem; color: #666;">ID: ${withdrawal.user_id.substring(0, 8)}...</div>
+                        </td>
+                        <td>${withdrawal.user_email}</td>
+                        <td><strong>${parseFloat(withdrawal.amount).toFixed(2)} USDT</strong></td>
+                        <td>
+                            <div class="full-wallet">${withdrawal.wallet}</div>
+                            <button class="copy-btn copy-wallet-btn" data-wallet="${withdrawal.wallet}">
+                                <i class="fas fa-copy"></i> Copiar Wallet
+                            </button>
+                        </td>
+                        <td>
+                            <div class="user-actions">
+                                <button class="btn btn-success btn-small confirm-withdrawal" 
+                                        data-id="${withdrawal.transaction_id}"
+                                        data-user="${withdrawal.user_name}"
+                                        data-amount="${withdrawal.amount}">
+                                    <i class="fas fa-check"></i> Procesar
+                                </button>
+                                <button class="btn btn-warning btn-small refund-withdrawal" 
+                                        data-id="${withdrawal.transaction_id}"
+                                        data-user="${withdrawal.user_name}"
+                                        data-amount="${withdrawal.amount}">
+                                    <i class="fas fa-undo"></i> Reembolsar
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            tbody.innerHTML = html;
+            
+            // Agregar event listeners
+            document.querySelectorAll('.confirm-withdrawal').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    confirmWithdrawal(
+                        this.dataset.id,
+                        this.dataset.user,
+                        this.dataset.amount
+                    );
+                });
+            });
+            
+            document.querySelectorAll('.refund-withdrawal').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    refundWithdrawal(
+                        this.dataset.id,
+                        this.dataset.user,
+                        this.dataset.amount
+                    );
+                });
+            });
+            
+            // Agregar listeners para copiar wallet
+            document.querySelectorAll('.copy-wallet-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const wallet = this.getAttribute('data-wallet');
+                    navigator.clipboard.writeText(wallet).then(() => {
+                        showAlert('Wallet copiada al portapapeles', 'success');
+                    });
+                });
+            });
+        }
+        
+        // Cargar usuarios
+        async function loadUsers() {
+            try {
+                // Usar API para obtener usuarios del JSON
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        action: 'get_dashboard_stats'
+                    })
+                });
+                
+                if (response.ok) {
+                    // Cargar el JSON completo
+                    const dbResponse = await fetch('database.json');
+                    if (dbResponse.ok) {
+                        const dbData = await dbResponse.json();
+                        currentData.users = Object.values(dbData.users || {});
+                        renderUsersTable();
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading users:', error);
+                showAlert('Error al cargar usuarios', 'error');
+            }
+        }
+        
+        // Renderizar tabla de usuarios
+        function renderUsersTable() {
+            const tbody = document.getElementById('users-tbody');
+            
+            if (!currentData.users || currentData.users.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="empty-state">
+                            <i class="fas fa-users"></i>
+                            <h4>No hay usuarios registrados</h4>
+                            <p>Aún no se han registrado usuarios en la plataforma</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            let html = '';
+            currentData.users.forEach(user => {
+                html += `
+                    <tr>
+                        <td title="${user.id}">
+                            <div style="font-family: monospace; font-size: 0.8rem;">
+                                ${user.id.substring(0, 8)}...
+                            </div>
+                        </td>
+                        <td>${user.name}</td>
+                        <td>${user.email}</td>
+                        <td>${user.username}</td>
+                        <td><strong>${parseFloat(user.invested_balance || 0).toFixed(2)} USDT</strong></td>
+                        <td><strong>${parseFloat(user.available_balance || 0).toFixed(2)} USDT</strong></td>
+                        <td>${formatDate(user.registration_date)}</td>
+                        <td>
+                            <div class="user-actions">
+                                <button class="btn btn-info btn-small view-user" 
+                                        data-id="${user.id}"
+                                        data-name="${user.name}">
+                                    <i class="fas fa-eye"></i> Ver
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            tbody.innerHTML = html;
+            
+            // Agregar event listeners a los botones
+            document.querySelectorAll('.view-user').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    showUserDetails(this.dataset.id, this.dataset.name);
+                });
+            });
+        }
+        
+        // Cargar todas las transacciones
+        async function loadAllTransactions() {
+            try {
+                // Cargar el JSON completo
+                const response = await fetch('database.json');
+                if (response.ok) {
+                    const dbData = await response.json();
+                    currentData.transactions = dbData.transactions || [];
+                    
+                    // También cargar usuarios si no están cargados
+                    if (currentData.users.length === 0) {
+                        currentData.users = Object.values(dbData.users || {});
+                    }
+                    
+                    renderTransactionsTable();
+                }
+            } catch (error) {
+                console.error('Error loading transactions:', error);
+                showAlert('Error al cargar transacciones', 'error');
+            }
+        }
+        
+        // Renderizar tabla de transacciones
+        function renderTransactionsTable() {
+            const tbody = document.getElementById('transactions-tbody');
+            
+            if (!currentData.transactions || currentData.transactions.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="empty-state">
+                            <i class="fas fa-exchange-alt"></i>
+                            <h4>No hay transacciones</h4>
+                            <p>No se han realizado transacciones en la plataforma</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            // Ordenar por fecha (más recientes primero)
+            const sortedTransactions = [...currentData.transactions].sort((a, b) => 
+                new Date(b.date) - new Date(a.date)
+            );
+            
+            let html = '';
+            sortedTransactions.forEach(transaction => {
+                // Obtener nombre de usuario
+                let userName = 'Usuario no encontrado';
+                const user = currentData.users.find(u => u.id === transaction.user_id);
+                if (user) {
+                    userName = user.name;
+                }
+                
+                html += `
+                    <tr style="cursor: pointer;" onclick="showTransactionDetails('${transaction.id}')">
+                        <td>${formatDate(transaction.date)}</td>
+                        <td>
+                            <span class="status ${transaction.type === 'deposit' ? 'status-info' : 'status-warning'}" 
+                                  style="background-color: ${transaction.type === 'deposit' ? '#d1ecf1' : '#fff3cd'}; 
+                                         color: ${transaction.type === 'deposit' ? '#0c5460' : '#856404'}">
+                                ${transaction.type === 'deposit' ? 'Depósito' : 'Retiro'}
+                            </span>
+                        </td>
+                        <td>${userName}</td>
+                        <td><strong>${parseFloat(transaction.amount).toFixed(2)} USDT</strong></td>
+                        <td>
+                            <span class="status ${transaction.status === 'completed' ? 'status-completed' : 'status-pending'}">
+                                ${transaction.status === 'completed' ? 'Completado' : 'Pendiente'}
+                            </span>
+                        </td>
+                        <td>
+                            <div style="font-size: 0.8rem; color: #666;">
+                                ${transaction.transaction_hash ? `Hash: ${transaction.transaction_hash.substring(0, 25)}...` : ''}
+                                ${transaction.wallet ? `Wallet: ${transaction.wallet.substring(0, 25)}...` : ''}
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            tbody.innerHTML = html;
+        }
+        
+        // Mostrar detalles de la transacción
+        function showTransactionDetails(transactionId) {
+            const transaction = currentData.transactions.find(t => t.id === transactionId);
+            if (!transaction) return;
+            
+            const user = currentData.users.find(u => u.id === transaction.user_id);
+            
+            let detailsHtml = `
+                <div style="margin-bottom: 1.2rem;">
+                    <h4 style="color: var(--primary-blue); margin-bottom: 0.8rem;">
+                        <i class="fas fa-info-circle"></i> Información de Transacción
+                    </h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;">
+                        <div>
+                            <p><strong>ID:</strong> <code style="font-size: 0.8rem;">${transaction.id}</code></p>
+                            <p><strong>Tipo:</strong> ${transaction.type === 'deposit' ? 'Depósito' : 'Retiro'}</p>
+                            <p><strong>Estado:</strong> ${transaction.status === 'completed' ? 'Completado' : 'Pendiente'}</p>
+                        </div>
+                        <div>
+                            <p><strong>Monto:</strong> ${parseFloat(transaction.amount).toFixed(2)} USDT</p>
+                            <p><strong>Fecha:</strong> ${formatDate(transaction.date)}</p>
+                            ${transaction.completion_date ? `<p><strong>Fecha Completado:</strong> ${formatDate(transaction.completion_date)}</p>` : ''}
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 1.2rem;">
+                    <h4 style="color: var(--primary-blue); margin-bottom: 0.8rem;">
+                        <i class="fas fa-user"></i> Información del Usuario
+                    </h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;">
+                        <div>
+                            <p><strong>Nombre:</strong> ${user ? user.name : 'No encontrado'}</p>
+                            <p><strong>Email:</strong> ${user ? user.email : 'No encontrado'}</p>
+                        </div>
+                        <div>
+                            <p><strong>Usuario:</strong> ${user ? user.username : 'No encontrado'}</p>
+                            <p><strong>ID:</strong> <code style="font-size: 0.8rem;">${transaction.user_id}</code></p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            if (transaction.type === 'deposit' && transaction.transaction_hash) {
+                detailsHtml += `
+                    <div style="margin-bottom: 1.2rem;">
+                        <h4 style="color: var(--primary-blue); margin-bottom: 0.8rem;">
+                            <i class="fas fa-receipt"></i> Hash de Transacción
+                        </h4>
+                        <div class="full-hash">${transaction.transaction_hash}</div>
+                        <button class="copy-btn copy-hash-btn" data-hash="${transaction.transaction_hash}" style="margin-top: 8px;">
+                            <i class="fas fa-copy"></i> Copiar Hash
+                        </button>
+                    </div>
+                `;
+            }
+            
+            if (transaction.type === 'withdrawal' && transaction.wallet) {
+                detailsHtml += `
+                    <div style="margin-bottom: 1.2rem;">
+                        <h4 style="color: var(--primary-blue); margin-bottom: 0.8rem;">
+                            <i class="fas fa-wallet"></i> Wallet de Destino
+                        </h4>
+                        <div class="full-wallet">${transaction.wallet}</div>
+                        <button class="copy-btn copy-wallet-btn" data-wallet="${transaction.wallet}" style="margin-top: 8px;">
+                            <i class="fas fa-copy"></i> Copiar Wallet
+                        </button>
+                    </div>
+                `;
+            }
+            
+            document.getElementById('transaction-details').innerHTML = detailsHtml;
+            
+            // Agregar listeners para botones de copiar
+            document.querySelectorAll('.copy-hash-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const hash = this.getAttribute('data-hash');
+                    navigator.clipboard.writeText(hash).then(() => {
+                        showAlert('Hash copiado al portapapeles', 'success');
+                    });
+                });
+            });
+            
+            document.querySelectorAll('.copy-wallet-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const wallet = this.getAttribute('data-wallet');
+                    navigator.clipboard.writeText(wallet).then(() => {
+                        showAlert('Wallet copiada al portapapeles', 'success');
+                    });
+                });
+            });
+            
+            document.getElementById('transaction-modal').style.display = 'flex';
+        }
+        
+        // Filtrar usuarios
+        function filterUsers() {
+            const searchTerm = document.getElementById('user-search').value.toLowerCase();
+            const tbody = document.getElementById('users-tbody');
+            
+            if (!searchTerm) {
+                renderUsersTable();
+                return;
+            }
+            
+            const filteredUsers = currentData.users.filter(user => 
+                user.name.toLowerCase().includes(searchTerm) ||
+                user.email.toLowerCase().includes(searchTerm) ||
+                user.username.toLowerCase().includes(searchTerm) ||
+                user.id.toLowerCase().includes(searchTerm)
+            );
+            
+            if (filteredUsers.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="empty-state">
+                            <i class="fas fa-search"></i>
+                            <h4>No se encontraron usuarios</h4>
+                            <p>No hay usuarios que coincidan con "${searchTerm}"</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            let html = '';
+            filteredUsers.forEach(user => {
+                html += `
+                    <tr>
+                        <td title="${user.id}">
+                            <div style="font-family: monospace; font-size: 0.8rem;">
+                                ${user.id.substring(0, 8)}...
+                            </div>
+                        </td>
+                        <td>${user.name}</td>
+                        <td>${user.email}</td>
+                        <td>${user.username}</td>
+                        <td><strong>${parseFloat(user.invested_balance || 0).toFixed(2)} USDT</strong></td>
+                        <td><strong>${parseFloat(user.available_balance || 0).toFixed(2)} USDT</strong></td>
+                        <td>${formatDate(user.registration_date)}</td>
+                        <td>
+                            <button class="btn btn-info btn-small view-user" 
+                                    data-id="${user.id}"
+                                    data-name="${user.name}">
+                                <i class="fas fa-eye"></i> Ver
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            tbody.innerHTML = html;
+            
+            // Agregar event listeners a los botones
+            document.querySelectorAll('.view-user').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    showUserDetails(this.dataset.id, this.dataset.name);
+                });
+            });
+        }
+        
+        // Filtrar transacciones
+        function filterTransactions() {
+            const searchTerm = document.getElementById('transaction-search').value.toLowerCase();
+            const tbody = document.getElementById('transactions-tbody');
+            
+            if (!searchTerm) {
+                renderTransactionsTable();
+                return;
+            }
+            
+            const filteredTransactions = currentData.transactions.filter(transaction => {
+                const user = currentData.users.find(u => u.id === transaction.user_id);
+                const userName = user ? user.name.toLowerCase() : '';
+                const transactionType = transaction.type === 'deposit' ? 'depósito' : 'retiro';
+                const amount = transaction.amount.toString();
+                const status = transaction.status === 'completed' ? 'completado' : 'pendiente';
+                
+                return userName.includes(searchTerm) ||
+                       transactionType.includes(searchTerm) ||
+                       amount.includes(searchTerm) ||
+                       status.includes(searchTerm) ||
+                       (transaction.transaction_hash && transaction.transaction_hash.toLowerCase().includes(searchTerm)) ||
+                       (transaction.wallet && transaction.wallet.toLowerCase().includes(searchTerm));
+            });
+            
+            if (filteredTransactions.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="6" class="empty-state">
+                            <i class="fas fa-search"></i>
+                            <h4>No se encontraron transacciones</h4>
+                            <p>No hay transacciones que coincidan con "${searchTerm}"</p>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+            
+            // Ordenar por fecha
+            const sortedTransactions = filteredTransactions.sort((a, b) => 
+                new Date(b.date) - new Date(a.date)
+            );
+            
+            let html = '';
+            sortedTransactions.forEach(transaction => {
+                let userName = 'Usuario no encontrado';
+                const user = currentData.users.find(u => u.id === transaction.user_id);
+                if (user) {
+                    userName = user.name;
+                }
+                
+                html += `
+                    <tr style="cursor: pointer;" onclick="showTransactionDetails('${transaction.id}')">
+                        <td>${formatDate(transaction.date)}</td>
+                        <td>
+                            <span class="status ${transaction.type === 'deposit' ? 'status-info' : 'status-warning'}" 
+                                  style="background-color: ${transaction.type === 'deposit' ? '#d1ecf1' : '#fff3cd'}; 
+                                         color: ${transaction.type === 'deposit' ? '#0c5460' : '#856404'}">
+                                ${transaction.type === 'deposit' ? 'Depósito' : 'Retiro'}
+                            </span>
+                        </td>
+                        <td>${userName}</td>
+                        <td><strong>${parseFloat(transaction.amount).toFixed(2)} USDT</strong></td>
+                        <td>
+                            <span class="status ${transaction.status === 'completed' ? 'status-completed' : 'status-pending'}">
+                                ${transaction.status === 'completed' ? 'Completado' : 'Pendiente'}
+                            </span>
+                        </td>
+                        <td>
+                            <div style="font-size: 0.8rem; color: #666;">
+                                ${transaction.transaction_hash ? `Hash: ${transaction.transaction_hash.substring(0, 25)}...` : ''}
+                                ${transaction.wallet ? `Wallet: ${transaction.wallet.substring(0, 25)}...` : ''}
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            });
+            
+            tbody.innerHTML = html;
+        }
+        
+        // Mostrar detalles del usuario
+        async function showUserDetails(userId, userName) {
+            try {
+                const response = await fetch('database.json');
+                if (response.ok) {
+                    const dbData = await response.json();
+                    const user = dbData.users[userId];
+                    
+                    if (user) {
+                        // Calcular estadísticas
+                        const investedBalance = parseFloat(user.invested_balance || 0);
+                        let daysInvested = 0;
+                        let totalEarned = 0;
+                        let dailyEarnings = 0;
+                        
+                        if (investedBalance > 0 && user.investment_start_date) {
+                            const startDate = new Date(user.investment_start_date);
+                            const currentDate = new Date();
+                            const diffTime = Math.abs(currentDate - startDate);
+                            daysInvested = Math.min(Math.floor(diffTime / (1000 * 60 * 60 * 24)), 165);
+                            dailyEarnings = investedBalance * 0.015;
+                            totalEarned = dailyEarnings * daysInvested;
+                        }
+                        
+                        // Obtener transacciones del usuario
+                        const userTransactions = (dbData.transactions || []).filter(t => t.user_id === userId);
+                        
+                        document.getElementById('user-details').innerHTML = `
+                            <div style="margin-bottom: 1.2rem;">
+                                <h4 style="color: var(--primary-blue); margin-bottom: 0.8rem;">
+                                    <i class="fas fa-user-circle"></i> Información Personal
+                                </h4>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;">
+                                    <div>
+                                        <p><strong>Nombre:</strong> ${user.name}</p>
+                                        <p><strong>Email:</strong> ${user.email}</p>
+                                        <p><strong>Usuario:</strong> ${user.username}</p>
+                                    </div>
+                                    <div>
+                                        <p><strong>Teléfono:</strong> ${user.phone}</p>
+                                        <p><strong>Código Referido:</strong> <code style="font-size: 0.8rem;">${user.referral_code}</code></p>
+                                        <p><strong>Referido por:</strong> ${user.referred_by || 'Ninguno'}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-bottom: 1.2rem;">
+                                <h4 style="color: var(--primary-blue); margin-bottom: 0.8rem;">
+                                    <i class="fas fa-chart-line"></i> Balance y Ganancias
+                                </h4>
+                                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 0.8rem;">
+                                    <div style="background: #f8f9fa; padding: 0.8rem; border-radius: 8px;">
+                                        <p style="color: #666; font-size: 0.8rem;">Balance Invertido</p>
+                                        <p style="font-size: 1.2rem; font-weight: bold; color: var(--primary-green);">
+                                            ${investedBalance.toFixed(2)} USDT
+                                        </p>
+                                    </div>
+                                    <div style="background: #f8f9fa; padding: 0.8rem; border-radius: 8px;">
+                                        <p style="color: #666; font-size: 0.8rem;">Balance Disponible</p>
+                                        <p style="font-size: 1.2rem; font-weight: bold; color: var(--light-blue);">
+                                            ${parseFloat(user.available_balance || 0).toFixed(2)} USDT
+                                        </p>
+                                    </div>
+                                    <div style="background: #f8f9fa; padding: 0.8rem; border-radius: 8px;">
+                                        <p style="color: #666; font-size: 0.8rem;">Ganancias Totales</p>
+                                        <p style="font-size: 1.2rem; font-weight: bold; color: var(--secondary-green);">
+                                            ${totalEarned.toFixed(2)} USDT
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-bottom: 1.2rem;">
+                                <h4 style="color: var(--primary-blue); margin-bottom: 0.8rem;">
+                                    <i class="fas fa-users"></i> Sistema de Referidos
+                                </h4>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;">
+                                    <div>
+                                        <p><strong>Referidos Totales:</strong> ${user.referrals_count || 0}</p>
+                                        <p><strong>Ganancias por Referidos:</strong> ${parseFloat(user.referral_earnings || 0).toFixed(2)} USDT</p>
+                                    </div>
+                                    <div>
+                                        <p><strong>Ganancias Diarias:</strong> ${dailyEarnings.toFixed(2)} USDT/día</p>
+                                        <p><strong>Días Invertidos:</strong> ${daysInvested} de 165</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div style="margin-bottom: 1.2rem;">
+                                <h4 style="color: var(--primary-blue); margin-bottom: 0.8rem;">
+                                    <i class="fas fa-info-circle"></i> Información de Sistema
+                                </h4>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem;">
+                                    <div>
+                                        <p><strong>Fecha de Registro:</strong> ${formatDate(user.registration_date)}</p>
+                                        <p><strong>Fecha Inicio Inversión:</strong> ${user.investment_start_date ? formatDate(user.investment_start_date) : 'No ha invertido'}</p>
+                                    </div>
+                                    <div>
+                                        <p><strong>Último Login:</strong> ${user.last_login ? formatDate(user.last_login) : 'Nunca'}</p>
+                                        <p><strong>ID de Usuario:</strong> <code style="font-size: 0.75rem;">${user.id}</code></p>
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                        
+                        document.getElementById('user-modal').style.display = 'flex';
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading user details:', error);
+                showAlert('Error al cargar detalles del usuario', 'error');
+            }
+        }
+        
+        // Confirmar depósito
+        async function confirmDeposit(transactionId, userName, amount) {
+            showConfirmationModal(
+                `¿Confirmar depósito de <strong>${amount} USDT</strong> para el usuario <strong>${userName}</strong>?\n\n` +
+                `✅ Se acreditará al balance disponible\n` +
+                `✅ Se procesarán comisiones de referidos (10%)\n` +
+                `✅ La transacción se marcará como completada`,
+                async () => {
+                    try {
+                        const response = await fetch(API_URL, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                action: 'confirm_deposit',
+                                password: adminPassword,
+                                transaction_id: transactionId
+                            })
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            showAlert(`✅ Depósito de ${amount} USDT confirmado para ${userName}`, 'success');
+                            loadDashboardData();
+                            loadPendingDeposits();
+                        } else {
+                            showAlert(`❌ ${data.message || 'Error al confirmar depósito'}`, 'error');
+                        }
+                    } catch (error) {
+                        console.error('Error confirming deposit:', error);
+                        showAlert('❌ Error de conexión al confirmar depósito', 'error');
+                    }
+                }
+            );
+        }
+        
+        // Eliminar depósito
+        async function deleteDeposit(transactionId) {
+            showConfirmationModal(
+                `¿Eliminar esta solicitud de depósito?\n\n` +
+                `⚠️ Esta acción eliminará permanentemente la solicitud\n` +
+                `⚠️ No se acreditará ningún monto al usuario\n` +
+                `⚠️ No se pueden deshacer los cambios`,
+                async () => {
+                    showAlert('⚠️ Función de eliminación requiere implementación manual en el JSON', 'warning');
+                }
+            );
+        }
+        
+        // Confirmar retiro
+        async function confirmWithdrawal(transactionId, userName, amount) {
+            showConfirmationModal(
+                `¿Marcar retiro de <strong>${amount} USDT</strong> para <strong>${userName}</strong> como procesado?\n\n` +
+                `✅ El monto ya fue descontado del balance del usuario\n` +
+                `✅ Esta acción solo marca la transacción como completada\n` +
+                `✅ Confirma que el pago fue realizado al usuario`,
+                async () => {
+                    try {
+                        const response = await fetch(API_URL, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                action: 'confirm_withdrawal',
+                                password: adminPassword,
+                                transaction_id: transactionId
+                            })
+                        });
+                        
+                        const data = await response.json();
+                        
+                        if (data.success) {
+                            showAlert(`✅ Retiro de ${amount} USDT marcado como procesado para ${userName}`, 'success');
+                            loadDashboardData();
+                            loadPendingWithdrawals();
+                        } else {
+                            showAlert(`❌ ${data.message || 'Error al procesar retiro'}`, 'error');
+                        }
+                    } catch (error) {
+                        console.error('Error confirming withdrawal:', error);
+                        showAlert('❌ Error de conexión al procesar retiro', 'error');
+                    }
+                }
+            );
+        }
+        
+        // Reembolsar retiro
+        async function refundWithdrawal(transactionId, userName, amount) {
+            showConfirmationModal(
+                `¿Reembolsar retiro de <strong>${amount} USDT</strong> a <strong>${userName}</strong>?\n\n` +
+                `⚠️ Esta acción devolverá los fondos al balance del usuario\n` +
+                `⚠️ Se cancelará la solicitud de retiro\n` +
+                `⚠️ El usuario deberá solicitar un nuevo retiro si lo desea`,
+                async () => {
+                    showAlert('⚠️ Función de reembolso requiere implementación manual en el JSON', 'warning');
+                }
+            );
+        }
+        
+        // Mostrar modal de confirmación
+        function showConfirmationModal(message, confirmCallback) {
+            document.getElementById('confirmation-message').innerHTML = message;
+            document.getElementById('confirmation-modal').style.display = 'flex';
+            
+            // Configurar acción de confirmación
+            const confirmBtn = document.getElementById('confirm-action');
+            confirmBtn.onclick = () => {
+                document.getElementById('confirmation-modal').style.display = 'none';
+                confirmCallback();
+            };
+        }
+        
+        // Formatear fecha
+        function formatDate(dateString) {
+            try {
+                const date = new Date(dateString);
+                return date.toLocaleDateString('es-ES', {
+                    day: '2-digit',
+                    month: '2-digit',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            } catch (e) {
+                return dateString;
+            }
+        }
+        
+        // Mostrar alerta
+        function showAlert(message, type) {
+            // Crear alerta
+            const alertDiv = document.createElement('div');
+            alertDiv.className = `alert alert-${type}`;
+            alertDiv.innerHTML = `
+                <i class="fas fa-${type === 'error' ? 'exclamation-circle' : type === 'warning' ? 'exclamation-triangle' : 'check-circle'}"></i>
+                <span>${message}</span>
+            `;
+            
+            // Insertar alerta en la posición correcta
+            const dashboard = document.getElementById('admin-dashboard');
+            if (dashboard && dashboard.style.display !== 'none') {
+                dashboard.insertBefore(alertDiv, dashboard.firstChild);
+            } else {
+                const loginSection = document.getElementById('login-section');
+                const loginMessage = document.getElementById('login-message');
+                if (loginMessage) {
+                    loginMessage.appendChild(alertDiv);
+                } else if (loginSection) {
+                    loginSection.insertBefore(alertDiv, loginSection.firstChild);
+                }
+            }
+            
+            // Auto-eliminar después de 5 segundos
+            setTimeout(() => {
+                if (alertDiv.parentNode) {
+                    alertDiv.remove();
+                }
+            }, 5000);
+        }
+    </script>
+</body>
+</html>
